@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const compression = require("compression");
 const path = require("path");
-const { createUser } = require("../database/db");
+const { createUser, login, reset } = require("../database/db");
+const cryptoRandomString = require("crypto-random-string");
 app.use(compression());
 const cookieSession = require("cookie-session");
 
@@ -30,7 +31,24 @@ app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
+app.post("/login", (req, res)=>{
+    const { email, password } = req.body;
 
+    if(!email || !password){
+        res.json({succes: false});
+        return;
+    }
+
+    login(email, password).then((user)=>{
+        if(!user){
+            res.json({succes:false});
+            return;
+        }
+        req.session.userId = user.id; 
+        res.json({succes: true});
+    });
+
+});
 
 app.post("/register", (req, res) => {
     const { first, last, email, password } = req.body;
@@ -53,6 +71,16 @@ app.post("/register", (req, res) => {
         })
         .catch((e) => console.log("error creating user: ", e));
     
+});
+
+app.post("/reset", (req, res)=>{
+    const { email } = req.body;
+    const secretCode = cryptoRandomString({
+        length: 6,
+    });
+    reset(email, secretCode).then(()=>{
+
+    }).catch(e=>console.log(e))
 });
 
 

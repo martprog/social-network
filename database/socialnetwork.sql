@@ -10,3 +10,10 @@ CREATE TABLE users (
      created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 );
+
+CREATE TABLE gencodes (
+     id SERIAL PRIMARY KEY,
+     email VARCHAR(50) NOT NULL REFERENCES users(email),
+     code VARCHAR NOT NULL,
+     created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

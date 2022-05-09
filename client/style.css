@@ -1,11 +1,145 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
-    background-color: ghostwhite;
+    height: 100vh;
+    background-image: url("/pbback.jpg");
+    background-origin: content-box;
+    font-family: 'Nunito', serif;
+}
+
+#welcome h1{
+    font-size: 40px;
+    text-shadow: -1px 0 pink, 0 1px pink, 1px 0 pink, 0 -1px pink;
+}
+
+.pinot-1{
+    height: 480px;
+    width: 320px;
+    position: absolute;
+    top: -15px;
+    left: 50px;
+    transform: rotate(-22deg);
+}
+
+.pinot-2{
+    height: 450px;
+    width: 290px;
+    position: absolute;  
+    top: 80px;
+    right: 20px;
+    transform: rotate(22deg);
+
 }
 
 .registration{
-    width: 200px;
+    
+    position: absolute;
+    top: 40px;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 12px;
+    margin: auto 0;
+    transform: translateX(100%);
+    width: 420px;
+    height: 550px;
+    padding: 40px;
     display: flex;
     gap: 10px;
     flex-direction: column;
-    border: 1px solid black
+    background-color: #72767d
 }
+
+.login{
+   position: absolute;
+    top: 80px;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 12px;
+    margin: auto 0;
+    transform: translateX(60%);
+    width: 550px;
+    height: 400px;
+    padding: 40px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    background-color: #72767d 
+}
+
+.logo{
+    background-color: pink;
+    height: 100px;
+    width: 100px;
+    /* transform: translateX(100%); */
+    border-radius: 35%;
+    object-fit: contain;
+    position: absolute;
+    /* left: 220px; */
+    right: 40px;
+    top: 20px;
+    border: 1px solid rgb(235, 196, 203);
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+input{
+    color: #dcddde;
+    outline: none;
+    border: none;
+    height: 40px;
+    padding: 12px;
+    background-color: #202225;
+    border-radius: 5px;
+}
+
+input:focus{
+    outline: 7px solid rgb(6, 127, 202);
+    transition: all 200ms;
+    
+}
+
+#submitReg{
+    outline: none;
+    border: none;
+    height: 40px;
+    background-color: pink;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+#submitReg:hover{
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all 200ms;
+}
+
+.wronglog{
+    position: absolute;
+    top: 88px;
+    left: 100px;
+    color: rgb(157, 10, 10);
+    font-weight: bold;
+    /* animation: slide 400ms   */
+}
+
+/* @keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(5px) rotate(15deg);
+    }
+    50% {
+        transform: translateX(5px) rotate(-15deg);
+    }
+    100% {
+        transform: translateX(0);
+    }
+} */

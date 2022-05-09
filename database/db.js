@@ -23,6 +23,59 @@ const createUser = (first, last, email, password) => {
     });
 };
 
+function getUserByEmail(email) {
+    const query = `
+            SELECT * FROM users
+            WHERE email=$1
+            `;
+    const params = [email];
+    return db.query(query, params).then((results) => {
+        return results.rows[0];
+    });
+}
+
+const login = (email, password) => {
+    return getUserByEmail(email)
+        .then((results) => {
+            if (!results) {
+                return null;
+            }
+            return bcrypt
+                .compare(password, results.password_hash)
+                .then((value) => {
+                    if (!value) {
+                        return null;
+                    }
+                    return results;
+                })
+                .catch(() => console.log("false credeeentials!"));
+        })
+        .catch(() => console.log("inexistent email"));
+};
+
+const reset = (email, code) => {
+    const query = `
+        INSERT INTO gencodes (email, code)
+        VALUES ($1, $2)
+        RETURNING *
+    `;
+
+    const params = [email, code];
+
+    return getUserByEmail(email)
+        .then((results) => {
+            if (!results) {
+                return null;
+            }
+            return db.query(query, params).then((results) => {
+                return results.rows[0];
+            });
+        })
+        .catch(() => console.log("inexistent email"));
+};
+
 module.exports = {
-    createUser
+    createUser,
+    login,
+    reset
 };

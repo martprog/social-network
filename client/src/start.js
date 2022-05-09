@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom";
-import Registration from "./registration";
+// import Registration from "./registration";
+import Welcome from "./Welcome";
 
 //decide between logged-in or logged-out experience
 fetch("/user/id.json")
@@ -7,10 +8,10 @@ fetch("/user/id.json")
     .then((data) => {
         
         if (!data.userId) {
-            ReactDOM.render(<Registration />, document.querySelector("main"));
+            ReactDOM.render(<Welcome />, document.querySelector("main"));
         } else {
             ReactDOM.render(
-                <img src="/logo.png" />,
+                <img className="logo" src="/peanut.png" />,
                 document.querySelector("main")
             );
         }

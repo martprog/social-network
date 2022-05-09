@@ -1,7 +1,6 @@
 import { Component } from "react";
-import { Link } from "react-router-dom";
 
-export default class Registration extends Component {
+export default class ResetPass extends Component {
     constructor() {
         super();
         this.state = {};
@@ -20,7 +19,7 @@ export default class Registration extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        fetch("/register", {
+        fetch("/reset", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -32,7 +31,7 @@ export default class Registration extends Component {
                 if (result.succes == false) {
                     this.setState({ error: true });
                 }
-                if (result.succes == true){
+                if (result.succes == true) {
                     location.reload();
                     this.setState({ error: false });
                 }
@@ -43,25 +42,12 @@ export default class Registration extends Component {
     render() {
         return (
             <>
-                {/* <img className="pinot-1" src="/pinot.png" />
-                <img className="pinot-2" src="/pinot2.png" /> */}
-
-                <div className="registration">
-                    <h1>Create account</h1>
-                    {this.state.error && <p className="wronglog">Oops, something went wrong!</p>}
+                <div className="reset">
+                    <h1>Reset Password</h1>
+                    {this.state.error && (
+                        <p className="wronglog">Oops, something went wrong!</p>
+                    )}
                     <form className="form" onSubmit={this.handleSubmit}>
-                        <input
-                            onChange={this.handleChange}
-                            placeholder="First Name"
-                            type="text"
-                            name="first"
-                        ></input>
-                        <input
-                            onChange={this.handleChange}
-                            placeholder="Last Name"
-                            type="text"
-                            name="last"
-                        ></input>
                         <input
                             onChange={this.handleChange}
                             placeholder="E-mail"
@@ -76,9 +62,7 @@ export default class Registration extends Component {
                         ></input>
                         <button id="submitReg">Submit</button>
                     </form>
-                    <p>
-                        Already a member? <Link to="/login">Log in</Link>
-                    </p>
+                    
                 </div>
             </>
         );
