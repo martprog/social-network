@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
-// import Registration from "./registration";
 import Welcome from "./Welcome";
+import App from "./App";
 
 //decide between logged-in or logged-out experience
 fetch("/user/id.json")
@@ -11,7 +11,7 @@ fetch("/user/id.json")
             ReactDOM.render(<Welcome />, document.querySelector("main"));
         } else {
             ReactDOM.render(
-                <img className="logo" src="/peanut.png" />,
+                <App />,
                 document.querySelector("main")
             );
         }

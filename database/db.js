@@ -102,10 +102,36 @@ const setNewPass = ( password, email) => {
     });
 };
 
+const getUserById = (id) =>{
+    const query = `SELECT * FROM users 
+        WHERE id=$1
+    `;
+
+    return db.query(query, [id]).then((results)=>{
+        return results.rows[0];
+    });
+};
+
+const uploadProfilePic = (url, id) =>{
+    const query = `
+        UPDATE users 
+        SET profile_picture_url=$1
+        WHERE id=$2
+        RETURNING *
+    `;
+
+    return db.query(query, [url, id]).then((results)=>{
+        
+        return results.rows[0];
+    });
+};
+
 module.exports = {
     createUser,
     login,
     reset,
     setNewPass,
-    getUserByCode
+    getUserByCode,
+    getUserById,
+    uploadProfilePic
 };

@@ -51,6 +51,17 @@ body {
     background-color: #72767d
 }
 
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.header img{
+    /* background-color: black; */
+    border: 2px solid black;
+    width: 50px;
+}
+
 .login{
    position: absolute;
     top: 80px;
@@ -127,6 +138,23 @@ input:focus{
     color: rgb(157, 10, 10);
     font-weight: bold;
     /* animation: slide 400ms   */
+}
+
+.modal{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.formUpload{
+    margin-top: 100px;
+    background-color: pink;
 }
 
 /* @keyframes slide {
