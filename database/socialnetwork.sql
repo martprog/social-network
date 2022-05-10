@@ -13,7 +13,7 @@ CREATE TABLE users (
 
 CREATE TABLE gencodes (
      id SERIAL PRIMARY KEY,
-     email VARCHAR(50) NOT NULL REFERENCES users(email),
-     code VARCHAR NOT NULL,
+     email VARCHAR(50) NOT NULL,
+     code VARCHAR(6) NOT NULL,
      created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

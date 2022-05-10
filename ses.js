@@ -13,12 +13,12 @@ const ses = new aws.SES({
     region: "eu-west-1", // Make sure this corresponds to the region in which you have verified your email address (or 'eu-west-1' if you are using the Spiced credentials)
 });
 
-module.exports.sendMail = (req, res, next) => {
+module.exports.sendMail = (email, code) => {
     const promise = ses
         .sendEmail({
-            Source: "Peanuuts Inc. <spotted.yam@spicedling.email>",
+            Source: 'peanut inc <spotted.yam@spicedling.email>',
             Destination: {
-                ToAddresses: [`spotted.yam+ ${email}`],
+                ToAddresses: [email],
             },
             Message: {
                 Body: {
@@ -36,7 +36,6 @@ module.exports.sendMail = (req, res, next) => {
     promise
         .then(() => {
             console.log("it worked!");
-            next();
         })
         .catch((err) => console.log(err));
 };

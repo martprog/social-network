@@ -9,7 +9,7 @@ function hashPassword(password) {
 }
 
 const createUser = (first, last, email, password) => {
-    // const { first, last, email, password } = obj;
+    
     return hashPassword(password).then((hashed) => {
         const query = `
             INSERT INTO users (first, last, email, password_hash)
@@ -74,8 +74,38 @@ const reset = (email, code) => {
         .catch(() => console.log("inexistent email"));
 };
 
+const getUserByCode = (code) => {
+    const query = `
+        SELECT * FROM gencodes
+        WHERE code=$1
+        AND CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes'
+    `;
+
+    return db.query(query, [code]).then((results) => {
+        return results.rows[0];
+    });
+};
+
+const setNewPass = ( password, email) => {
+    console.log('prueba:', email, password);
+    return hashPassword(password).then((hashed) => {
+        const query = `
+            UPDATE users
+            SET password_hash=$1
+            WHERE email=$2
+            RETURNING *
+        `;
+        
+        return db.query(query, [hashed, email]).then((results) => {
+            return results.rows[0];
+        });
+    });
+};
+
 module.exports = {
     createUser,
     login,
-    reset
+    reset,
+    setNewPass,
+    getUserByCode
 };
