@@ -9,7 +9,7 @@ body {
     font-family: 'Nunito', serif;
 }
 
-#logo-name{
+.logo-name{
     font-size: 40px;
     text-shadow: -1px 0 pink, 0 1px pink, 1px 0 pink, 0 -1px pink;
 }
@@ -53,14 +53,49 @@ body {
 
 .header{
     display: flex;
+    background-color: pink;
+    border-radius: 12px;
     justify-content: space-between;
+    padding: 12px;
+    padding-left: 60px;
+    padding-right: 60px;
+    margin: 40px;
+
 }
 
-.header img{
+.header h1{
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+
+#profilePic{
     /* background-color: black; */
     border: 2px solid black;
-    width: 50px;
+    border-radius: 12px;
+    width: 90px;
+    background-color: white;
+    object-fit: cover;
+    position: relative;
 }
+
+#profilePic:hover{
+    cursor: pointer;
+    opacity: 0.8;
+    
+    transition: all 100ms;
+}
+
+.hovered{
+    position: absolute;
+    color: white;
+    right: 110px;
+    transition: all 100ms;
+}
+
+.hovered:hover{
+    cursor: pointer;
+}
+
+
 
 .login{
    position: absolute;
@@ -86,10 +121,7 @@ body {
     /* transform: translateX(100%); */
     border-radius: 35%;
     object-fit: contain;
-    position: absolute;
-    /* left: 220px; */
-    right: 40px;
-    top: 20px;
+    
     border: 1px solid rgb(235, 196, 203);
 }
 
@@ -155,7 +187,60 @@ input:focus{
 .formUpload{
     margin-top: 100px;
     background-color: pink;
+    height: 200px;
+    width: 500px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 10px 0px black;
+    text-align: center;
+    
 }
+
+#submitPic{
+    outline: none;
+    border: none;
+    height: 40px;
+    background-color: #72767d;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+/* #file-choose {
+    opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+} */
+
+
+#submitPic:hover{
+    cursor: pointer;
+}
+
+#closeBtn{
+    background-color: #72767d;
+    width: 50px;
+    height: 50px;
+    color: white;
+    padding: 12px;
+    font-size: 20px;
+    border: 1px solid white;
+    position: absolute;
+    right: 340px;
+    top: 40px;
+    text-align: center;
+    border-radius: 50%;
+    opacity: 0.6;
+    transition: opacity 100ms;
+
+}
+
+#closeBtn:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+
+
 
 /* @keyframes slide {
     0% {

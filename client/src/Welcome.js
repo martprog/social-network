@@ -8,7 +8,7 @@ import ResetPass from "./ResetPassword";
 export default function Welcome() {
     return (
         <div id="welcome">
-            <h1 id="logo-name">Peanuuts!</h1>
+            <h1 className="logo-name">Peanuuts!</h1>
             <img className="logo" src="/peanut.png" />
             <img className="pinot-1" src="/pinot.png" />
             <img className="pinot-2" src="/pinot2.png" />

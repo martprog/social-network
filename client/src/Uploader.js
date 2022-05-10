@@ -30,6 +30,9 @@ export default class Uploader extends Component{
     render() {
         return (
             <div className="modal">
+                <div onClick={this.props.closeModal} id="closeBtn">
+                    &times;
+                </div>
                 <div className="formUpload">
                     <h1>upload foto</h1>
                     <form onSubmit={this.onSubmit}>
@@ -39,11 +42,9 @@ export default class Uploader extends Component{
                             type="file"
                             accept="image/*"
                         ></input>
+                        {/* <label htmlFor="file">Select file</label> */}
                         <button id="submitPic">Upload Image!</button>
                     </form>
-                    <div onClick={this.props.closeModal} id="closeBtn">
-                        Close
-                    </div>
                 </div>
             </div>
         );

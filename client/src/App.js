@@ -7,7 +7,8 @@ export default class App extends Component {
         super(props);
         this.state = {
             modalOn: false,
-            profile_picture_url: "",
+            profile_picture_url:
+                "./default.png",
             first: "",
         };
         this.openModal = this.openModal.bind(this);
@@ -21,7 +22,13 @@ export default class App extends Component {
             .then((res) => res.json())
             .then((data) => {
                 
-                this.setState(data);
+                if(data.profile_picture_url){
+                    this.setState(data);
+                    
+                }else{
+                    this.setState({first: data.first});
+                }
+                
             });
     }
 
@@ -49,20 +56,20 @@ export default class App extends Component {
         return (
             <>
                 <div className="header">
-                    <h1>Hola {this.state.first}</h1>
-                    {/* <img className="logo" src="/peanut.png" /> */}
+                    <img className="logo" src="/peanut.png" />
+                    <h1>Welcome, {this.state.first}!</h1>
                     <ProfilePic
                         url={this.state.profile_picture_url}
                         openModal={this.openModal}
                     />
-                    {this.state.modalOn && (
-                        <Uploader
-                            // handlePicChange={this.handlePicChange}
-                            onUpload={this.onUpload}
-                            closeModal={this.closeModal}
-                        />
-                    )}
                 </div>
+                {this.state.modalOn && (
+                    <Uploader
+                        // handlePicChange={this.handlePicChange}
+                        onUpload={this.onUpload}
+                        closeModal={this.closeModal}
+                    />
+                )}
             </>
         );
     }

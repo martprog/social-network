@@ -65,7 +65,7 @@ export default class Login extends Component {
                         <button id="submitReg">Submit</button>
                     </form>
                     <p>
-                        Not a member? <a href="/register">Register</a>
+                        Not a member? <Link to="/">Register</Link>
                     </p>
                     <p>
                         <Link to="/reset">Reset Password</Link>
