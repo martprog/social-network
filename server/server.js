@@ -6,7 +6,7 @@ app.use(compression());
 const cookieSession = require("cookie-session");
 const logAndReg = require("./routes/logReg");
 const resetPassword = require("./routes/resetPass");
-const { getUserById, uploadProfilePic } = require("../database/db");
+const { getUserById, uploadProfilePic, updateBio } = require("../database/db");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const s3 = require("../s3");
@@ -51,23 +51,37 @@ app.get("/user/me.json", (req, res) => {
     });
 });
 
-app.post("/user/profile_picture", uploader.single("image"), s3.upload, (req, res) => {
-    const { userId } = req.session;
-    const { filename } = req.file;
-    let url = `https://s3.amazonaws.com/spicedling/${filename}`;
+app.post(
+    "/user/profile_picture",
+    uploader.single("image"),
+    s3.upload,
+    (req, res) => {
+        const { userId } = req.session;
+        const { filename } = req.file;
+        let url = `https://s3.amazonaws.com/spicedling/${filename}`;
 
-    if (req.file) {
-        uploadProfilePic(url, userId)
-            .then((results) => {
-                console.log('results of upload: ', results);
-                res.json(results);
-            })
-            .catch((e) => console.log("error uploading: ", e));
-    } else {
-        res.json({
-            succes: false,
-        });
+        if (req.file) {
+            uploadProfilePic(url, userId)
+                .then((results) => {
+                    console.log("results of upload: ", results);
+                    res.json(results);
+                })
+                .catch((e) => console.log("error uploading: ", e));
+        } else {
+            res.json({
+                succes: false,
+            });
+        }
     }
+);
+
+app.put("/user/profile_bio", (req, res) => {
+    const { bio } = req.body;
+    const { userId } = req.session;
+
+    updateBio(bio, userId).then((results) => {
+        res.json(results);
+    });
 });
 
 app.get("*", function (req, res) {

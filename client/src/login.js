@@ -64,12 +64,15 @@ export default class Login extends Component {
                         ></input>
                         <button id="submitReg">Submit</button>
                     </form>
-                    <p>
-                        Not a member? <Link to="/">Register</Link>
-                    </p>
-                    <p>
-                        <Link to="/reset">Reset Password</Link>
-                    </p>
+                    <div className="containerLinks">
+                        <p>
+                            Not a member? <Link to="/">Register</Link>
+                        </p>
+                        <p>
+                            <Link to="/reset">Reset Password</Link>
+                        </p>
+
+                    </div>
                 </div>
             </>
         );

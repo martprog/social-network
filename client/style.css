@@ -2,23 +2,43 @@
     box-sizing: border-box;
 }
 
+html{
+    background: url("/pbback.jpg") no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  /* overflow: hidden; */
+}
+
 body {
-    height: 100vh;
-    background-image: url("/pbback.jpg");
+    /* height: 100vh;
+    background-image: url("/pbback.jpg")   ;
     background-origin: content-box;
+    background-size: cover; */
+    /* background-repeat: no-repeat; */
     font-family: 'Nunito', serif;
+    width: 100%;
+    /* margin-right: auto; */
+}
+
+.wrapper{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0 40px;
 }
 
 .logo-name{
     font-size: 40px;
     text-shadow: -1px 0 pink, 0 1px pink, 1px 0 pink, 0 -1px pink;
+    position: relative
 }
 
 .pinot-1{
     height: 480px;
     width: 320px;
     position: absolute;
-    top: -15px;
+    /* top: -15px; */
+    bottom: -40px;
     left: 50px;
     transform: rotate(-22deg);
 }
@@ -59,7 +79,9 @@ body {
     padding: 12px;
     padding-left: 60px;
     padding-right: 60px;
-    margin: 40px;
+    /* margin: 40px; */
+    margin-bottom: 20px;
+    margin-top: 30px;
 
 }
 
@@ -67,17 +89,24 @@ body {
     text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }
 
-#profilePic{
+.wrapper h1{
+    margin-bottom: 5px;
+    text-shadow: -1px 0 pink, 0 1px pink, 1px 0 pink, 0 -1px pink;
+
+}
+
+.profilePic{
     /* background-color: black; */
-    border: 2px solid black;
-    border-radius: 12px;
-    width: 90px;
+    /* border: 2px solid black; */
+    border-radius: 50%;
+    height: 110px;
+    width: 110px;
     background-color: white;
-    object-fit: cover;
+    object-fit: cover ;
     position: relative;
 }
 
-#profilePic:hover{
+.profilePic:hover{
     cursor: pointer;
     opacity: 0.8;
     
@@ -87,12 +116,80 @@ body {
 .hovered{
     position: absolute;
     color: white;
-    right: 110px;
+    right: 105px;
+    top: 140px;
     transition: all 100ms;
 }
 
 .hovered:hover{
     cursor: pointer;
+}
+
+.profileContainer{
+    display: flex;
+    gap: 50px;
+    /* border: 2px solid black; */
+    height: 20em;
+    /* margin: 0 40px ; */
+    padding: 12px;
+    background-color: #36393f;
+    color: #d6d7da;
+    border: 2px solid #202225;
+    border-radius: 12px;
+}
+
+
+.textContainer{
+    height: 100px;
+    width: 650px;
+    background-color: #202225;
+    position: relative;
+    border-radius: 6px;
+    padding-left: 8px;
+}
+
+textarea{
+    outline: none;
+    border: none;
+    caret-color: #d6d7da;
+    color: #d6d7da;
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+}
+
+.textareaBtns{
+    display: flex;
+    justify-content: space-between;
+}
+
+.btns{
+    outline: none;
+    border: none;
+    height: 30px;
+    width: 130px;
+    background-color: #72767d;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.btns:hover{
+    cursor: pointer;
+}
+
+#editBtn{
+    position: absolute;
+    bottom: -40px;
+}
+
+
+.profileContainer img{
+    height: 250px;
+    align-self: center;
+    width: 250px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 
@@ -116,13 +213,15 @@ body {
 
 .logo{
     background-color: pink;
-    height: 100px;
-    width: 100px;
+    height: 120px;
+    width: 120px;
     /* transform: translateX(100%); */
-    border-radius: 35%;
+    border-radius: 15%;
     object-fit: contain;
-    
     border: 1px solid rgb(235, 196, 203);
+    /* position: absolute;
+    left: 50px;
+    top: 85px; */
 }
 
 .form{
@@ -161,6 +260,11 @@ input:focus{
     cursor: pointer;
     opacity: 0.6;
     transition: all 200ms;
+}
+
+.containerLinks{
+    display: flex;
+    justify-content: space-between;
 }
 
 .wronglog{

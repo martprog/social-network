@@ -36,10 +36,11 @@ export default class ProfilePic extends Component {
     render() {
         return (
             <>
+                
                 <img
                     onMouseOver={this.onHover}
                     onMouseLeave={this.offHover}
-                    id="profilePic"
+                    className="profilePic"
                     src={this.props.url}
                     onClick={this.props.openModal}
                 />

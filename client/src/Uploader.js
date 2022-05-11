@@ -4,7 +4,7 @@ export default class Uploader extends Component{
 
     constructor(props){
         super(props);
-        this.onSubmit = this.onSubmit.bind(this)
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     onSubmit(e){
@@ -29,7 +29,7 @@ export default class Uploader extends Component{
     
     render() {
         return (
-            <div className="modal">
+            <div  className="modal">
                 <div onClick={this.props.closeModal} id="closeBtn">
                     &times;
                 </div>

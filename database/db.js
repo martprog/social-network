@@ -126,6 +126,20 @@ const uploadProfilePic = (url, id) =>{
     });
 };
 
+const updateBio = (bio, id) =>{
+    const query = `
+        UPDATE users
+        SET bio=$1
+        WHERE id=$2
+        RETURNING *
+    `;
+
+    return db.query(query, [bio, id]).then((results)=>{
+        return results.rows[0];
+    });
+
+};
+
 module.exports = {
     createUser,
     login,
@@ -133,5 +147,6 @@ module.exports = {
     setNewPass,
     getUserByCode,
     getUserById,
-    uploadProfilePic
+    uploadProfilePic,
+    updateBio
 };
