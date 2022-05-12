@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default class Login extends Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {error: false};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -20,6 +20,7 @@ export default class Login extends Component {
     }
 
     handleSubmit(e) {
+        this.setState({error:false})
         e.preventDefault();
         fetch("/login", {
             method: "POST",
@@ -30,6 +31,7 @@ export default class Login extends Component {
         })
             .then((res) => res.json())
             .then((result) => {
+                
                 if (result.succes == false) {
                     this.setState({ error: true });
                 }
@@ -44,7 +46,7 @@ export default class Login extends Component {
     render() {
         return (
             <>
-                <div className="login">
+                <div className="login" >
                     <h1>Welcome Back!</h1>
                     {this.state.error && (
                         <p className="wronglog">Oops, something went wrong!</p>

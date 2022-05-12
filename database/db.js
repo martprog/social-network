@@ -9,7 +9,6 @@ function hashPassword(password) {
 }
 
 const createUser = (first, last, email, password) => {
-    
     return hashPassword(password).then((hashed) => {
         const query = `
             INSERT INTO users (first, last, email, password_hash)
@@ -86,8 +85,8 @@ const getUserByCode = (code) => {
     });
 };
 
-const setNewPass = ( password, email) => {
-    console.log('prueba:', email, password);
+const setNewPass = (password, email) => {
+    console.log("prueba:", email, password);
     return hashPassword(password).then((hashed) => {
         const query = `
             UPDATE users
@@ -95,24 +94,24 @@ const setNewPass = ( password, email) => {
             WHERE email=$2
             RETURNING *
         `;
-        
+
         return db.query(query, [hashed, email]).then((results) => {
             return results.rows[0];
         });
     });
 };
 
-const getUserById = (id) =>{
+const getUserById = (id) => {
     const query = `SELECT * FROM users 
         WHERE id=$1
     `;
 
-    return db.query(query, [id]).then((results)=>{
+    return db.query(query, [id]).then((results) => {
         return results.rows[0];
     });
 };
 
-const uploadProfilePic = (url, id) =>{
+const uploadProfilePic = (url, id) => {
     const query = `
         UPDATE users 
         SET profile_picture_url=$1
@@ -120,13 +119,12 @@ const uploadProfilePic = (url, id) =>{
         RETURNING *
     `;
 
-    return db.query(query, [url, id]).then((results)=>{
-        
+    return db.query(query, [url, id]).then((results) => {
         return results.rows[0];
     });
 };
 
-const updateBio = (bio, id) =>{
+const updateBio = (bio, id) => {
     const query = `
         UPDATE users
         SET bio=$1
@@ -134,10 +132,33 @@ const updateBio = (bio, id) =>{
         RETURNING *
     `;
 
-    return db.query(query, [bio, id]).then((results)=>{
+    return db.query(query, [bio, id]).then((results) => {
         return results.rows[0];
     });
+};
 
+const getLatestUsers = () => {
+    const query = `
+        SELECT * FROM USERS
+        ORDER BY created_at DESC
+        LIMIT 3
+    `;
+
+    return db.query(query).then((results) => {
+        return results.rows;
+    });
+};
+
+const getUsersByQuery = (search, id) => {
+    const query = `
+        SELECT * FROM  USERS
+        WHERE first ILIKE $1 
+        AND id not in($2)
+    `;
+
+    return db.query(query, [search + "%", id]).then((results) => {
+        return results.rows;
+    });
 };
 
 module.exports = {
@@ -148,5 +169,7 @@ module.exports = {
     getUserByCode,
     getUserById,
     uploadProfilePic,
-    updateBio
+    updateBio,
+    getLatestUsers,
+    getUsersByQuery,
 };

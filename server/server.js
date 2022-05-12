@@ -6,10 +6,17 @@ app.use(compression());
 const cookieSession = require("cookie-session");
 const logAndReg = require("./routes/logReg");
 const resetPassword = require("./routes/resetPass");
-const { getUserById, uploadProfilePic, updateBio } = require("../database/db");
+const {
+    getUserById,
+    uploadProfilePic,
+    updateBio,
+    getLatestUsers,
+    getUsersByQuery,
+} = require("../database/db");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const s3 = require("../s3");
+const secrets = require("../secrets");
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -29,7 +36,7 @@ const uploader = multer({
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 app.use(
     cookieSession({
-        secret: `I'm always angry.`,
+        secret: secrets.COOKIE_SECRET,
         maxAge: 1000 * 60 * 60 * 24 * 14,
         sameSite: true,
     })
@@ -82,6 +89,25 @@ app.put("/user/profile_bio", (req, res) => {
     updateBio(bio, userId).then((results) => {
         res.json(results);
     });
+});
+
+app.get("/users", (req, res) => {
+    
+    const search = req.query.search;
+    const { userId } = req.session
+
+    if (!search) {
+        getLatestUsers().then((users) => {
+            res.json(users);
+        });
+        return;
+    }else{
+        getUsersByQuery(search, userId).then((users) => {
+            
+            res.json(users);
+        });
+
+    }
 });
 
 app.get("*", function (req, res) {

@@ -1,7 +1,10 @@
 import { Component } from "react";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 import ProfilePic from "./ProfilePic";
 import Uploader from "./Uploader";
 import Profile from "./Profile";
+import FindPeople from "./FindPeople";
+import Main from "./Main";
 
 export default class App extends Component {
     constructor(props) {
@@ -62,11 +65,10 @@ export default class App extends Component {
     }
 
     render() {
-        console.log(this.state);
+        
         return (
             <>
                 <div className="wrapper">
-
                     <div className="header">
                         <img className="logo" src="/peanut.png" />
                         <h1>Welcome, {this.state.first}!</h1>
@@ -75,8 +77,6 @@ export default class App extends Component {
                             openModal={this.openModal}
                         />
                     </div>
-                    <h1>Your Profile</h1>
-                    <Profile {...this.state} onBioUpload={this.onBioUpload} openModal={this.openModal}/>
                     {this.state.modalOn && (
                         <Uploader
                             // handlePicChange={this.handlePicChange}
@@ -84,6 +84,31 @@ export default class App extends Component {
                             closeModal={this.closeModal}
                         />
                     )}
+                    <BrowserRouter>
+                        <Route path="/find">
+                            <Main
+                                {...this.state}
+                                onBioUpload={this.onBioUpload}
+                                openModal={this.openModal}
+                            />
+
+                        </Route>
+                        <Route exact path="/">
+                            <Profile
+                                {...this.state}
+                                onBioUpload={this.onBioUpload}
+                                openModal={this.openModal}
+                            />
+                            <Link to="/find">Find friends</Link>
+                        </Route>
+                        <Route path="/findusers">
+                            <FindPeople
+                                {...this.state}
+                                onBioUpload={this.onBioUpload}
+                                openModal={this.openModal}
+                            />
+                        </Route>
+                    </BrowserRouter>
                 </div>
             </>
         );

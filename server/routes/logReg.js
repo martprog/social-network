@@ -16,6 +16,7 @@ router.post("/login", (req, res) => {
     login(email, password).then((user) => {
         if (!user) {
             res.json({ succes: false });
+            
             return;
         }
         req.session.userId = user.id;

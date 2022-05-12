@@ -19,6 +19,8 @@ export default class Registration extends Component {
     }
 
     handleSubmit(e) {
+        this.setState({ error: false });
+
         e.preventDefault();
         fetch("/register", {
             method: "POST",
@@ -41,6 +43,8 @@ export default class Registration extends Component {
     }
 
     render() {
+
+        const regist = this.state.error? "registration wronlog":"registration";
         return (
             <>
                 {/* <img className="pinot-1" src="/pinot.png" />

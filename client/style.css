@@ -5,7 +5,7 @@
 html{
     background: url("/pbback.jpg") no-repeat center center fixed;
   background-size: cover;
-  height: 100%;
+  /* height: 100%; */
   /* overflow: hidden; */
 }
 
@@ -17,11 +17,17 @@ body {
     /* background-repeat: no-repeat; */
     font-family: 'Nunito', serif;
     width: 100%;
+    /* height: 100vh; */
     /* margin-right: auto; */
 }
 
-.wrapper{
+main{
     height: 100vh;
+    overflow: scroll;
+}
+
+.wrapper{
+    /* height: 100vh; */
     display: flex;
     flex-direction: column;
     margin: 0 40px;
@@ -86,12 +92,14 @@ body {
 }
 
 .header h1{
-    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+    /* text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white; */
+    text-shadow: none
+
 }
 
 .wrapper h1{
     margin-bottom: 5px;
-    text-shadow: -1px 0 pink, 0 1px pink, 1px 0 pink, 0 -1px pink;
+    text-shadow: -1px 0 pink, 0 1px pink, 1px 0 pink, 0 -2px pink, -2px 0 white, 1px 2px white, 1px 1px white, 0 -2px white;;
 
 }
 
@@ -134,15 +142,15 @@ body {
     padding: 12px;
     background-color: #36393f;
     color: #d6d7da;
-    border: 2px solid #202225;
+    /* border: 2px solid #202225; */
     border-radius: 12px;
 }
 
 
 .textContainer{
     height: 100px;
-    width: 650px;
-    background-color: #202225;
+    /* width: 650px; */
+    background-color: transparent;
     position: relative;
     border-radius: 6px;
     padding-left: 8px;
@@ -153,9 +161,12 @@ textarea{
     border: none;
     caret-color: #d6d7da;
     color: #d6d7da;
-    background-color: transparent;
+    background-color: #202225;
+    border-radius: 8px;
+    resize: none;
     height: 100px;
     width: 100%;
+    padding: 12px;
 }
 
 .textareaBtns{
@@ -176,6 +187,8 @@ textarea{
 
 .btns:hover{
     cursor: pointer;
+    background-color: #3a9459;
+    transition: all 100ms;
 }
 
 #editBtn{
@@ -268,12 +281,53 @@ input:focus{
 }
 
 .wronglog{
-    position: absolute;
+    /* position: absolute;
     top: 88px;
     left: 100px;
     color: rgb(157, 10, 10);
-    font-weight: bold;
+    font-weight: bold; */
     /* animation: slide 400ms   */
+    animation: shake 400ms cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.mainWrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.findWrapper{
+    display: flex;
+    flex-direction: column;
+    background-color: #72767d;
+    padding: 20px;
+    width: 400px;
+    height: 500px;
+    overflow: scroll;
+}
+
+
+
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 
 .modal{
@@ -342,6 +396,29 @@ input:focus{
 #closeBtn:hover{
     opacity: 1;
     cursor: pointer;
+}
+
+
+.allResults{
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    gap: 30px;
+    
+}
+.usersFind{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.usersFind img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 
