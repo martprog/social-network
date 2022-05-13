@@ -5,6 +5,7 @@ import Uploader from "./Uploader";
 import Profile from "./Profile";
 import FindPeople from "./FindPeople";
 import Main from "./Main";
+import OtherProfile from "./OtherProfile"
 
 export default class App extends Component {
     constructor(props) {
@@ -16,12 +17,15 @@ export default class App extends Component {
             first: "",
             last: "",
             bio: "",
+            clicked: false
         };
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.handlePicChange = this.handlePicChange.bind(this);
         this.onUpload = this.onUpload.bind(this);
         this.onBioUpload = this.onBioUpload.bind(this);
+        this.menuList = this.menuList.bind(this);
+        this.renderList = this.renderList.bind(this)
     }
 
     componentDidMount() {
@@ -64,52 +68,109 @@ export default class App extends Component {
         this.setState({bio: newBio});
     }
 
+    menuList(){
+        console.log("clicked!");
+        if(!this.state.clicked){
+            this.setState({clicked: true});
+        }else{
+            this.setState({ clicked: false});
+        }
+    }
+
+    renderList (){
+        return (
+            <>
+                <div id="menus" onClose={this.menuList}>
+                    <div>
+                        <Link onClick={this.menuList} to="/findusers">
+                            Add friends
+                        </Link>
+                    </div>
+                    <div>
+                        <Link onClick={this.menuList} to="/find">
+                            Homepage
+                        </Link>
+                    </div>
+                    <div>
+                        <Link onClick={this.menuList} to="/">
+                            Edit your profile
+                        </Link>
+                    </div>
+                    <div>
+                        <Link onClick={this.menuList} to="/findusers">
+                            Add friends
+                        </Link>
+                    </div>
+                </div>
+            </>
+        );
+    }
+
     render() {
         
         return (
             <>
-                <div className="wrapper">
-                    <div className="header">
-                        <img className="logo" src="/peanut.png" />
-                        <h1>Welcome, {this.state.first}!</h1>
-                        <ProfilePic
-                            url={this.state.profile_picture_url}
-                            openModal={this.openModal}
-                        />
-                    </div>
-                    {this.state.modalOn && (
-                        <Uploader
-                            // handlePicChange={this.handlePicChange}
-                            onUpload={this.onUpload}
-                            closeModal={this.closeModal}
-                        />
-                    )}
-                    <BrowserRouter>
-                        <Route path="/find">
-                            <Main
-                                {...this.state}
-                                onBioUpload={this.onBioUpload}
+                <BrowserRouter>
+                    <div
+                        onClick={this.state.clicked ? this.menuList : ""}
+                        className="wrapper"
+                    >
+                        <div
+                            className="header"
+                            
+                        >
+                            <img
+                                onClick={this.menuList}
+                                className="logo"
+                                src="/peanut.png"
+                            />
+                            {this.state.clicked ? this.renderList() : ""}
+                            
+                            <h1>Welcome, {this.state.first}!</h1>
+                            <ProfilePic
+                                url={this.state.profile_picture_url}
                                 openModal={this.openModal}
                             />
+                        </div>
+                        {this.state.modalOn && (
+                            <Uploader
+                                // handlePicChange={this.handlePicChange}
+                                onUpload={this.onUpload}
+                                closeModal={this.closeModal}
+                            />
+                        )}
+                        <div className="multi-wrapper">
 
-                        </Route>
-                        <Route exact path="/">
-                            <Profile
-                                {...this.state}
-                                onBioUpload={this.onBioUpload}
-                                openModal={this.openModal}
-                            />
-                            <Link to="/find">Find friends</Link>
-                        </Route>
-                        <Route path="/findusers">
-                            <FindPeople
-                                {...this.state}
-                                onBioUpload={this.onBioUpload}
-                                openModal={this.openModal}
-                            />
-                        </Route>
-                    </BrowserRouter>
-                </div>
+                            <div className="wrapperRouter" >
+                                <Route path="/find">
+                                    <Main
+                                        {...this.state}
+                                        onBioUpload={this.onBioUpload}
+                                        openModal={this.openModal}
+                                    />
+                                </Route>
+                                <Route exact path="/">
+                                    <Profile
+                                        {...this.state}
+                                        onBioUpload={this.onBioUpload}
+                                        openModal={this.openModal}
+                                    />
+                                    <Link to="/find">Find friends</Link>
+                                </Route>
+                                <Route path="/findusers">
+                                    <FindPeople
+                                        {...this.state}
+                                        onBioUpload={this.onBioUpload}
+                                        openModal={this.openModal}
+                                    />
+                                </Route>
+                                <Route path="/users/:otherUserId">
+                                    <OtherProfile />
+                                </Route>
+                            </div>
+                        </div>
+                    </div>
+                </BrowserRouter>
             </>
         );
     }

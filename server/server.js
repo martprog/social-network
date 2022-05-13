@@ -12,6 +12,7 @@ const {
     updateBio,
     getLatestUsers,
     getUsersByQuery,
+    getOtherUserProfile,
 } = require("../database/db");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
@@ -92,22 +93,37 @@ app.put("/user/profile_bio", (req, res) => {
 });
 
 app.get("/users", (req, res) => {
-    
     const search = req.query.search;
-    const { userId } = req.session
+    const { userId } = req.session;
 
     if (!search) {
         getLatestUsers().then((users) => {
             res.json(users);
         });
         return;
-    }else{
+    } else {
         getUsersByQuery(search, userId).then((users) => {
-            
             res.json(users);
         });
-
     }
+});
+
+app.get("/api/users/:otherUserId", (req, res) => {
+    const { otherUserId } = req.params;
+
+    const { userId } = req.session;
+
+    if (otherUserId == userId) {
+        res.json({ error: true });
+        return;
+    }
+    getOtherUserProfile(otherUserId).then((data) => {
+        if (!data) {
+            res.json({ error: true });
+            return;
+        }
+        res.json(data);
+    });
 });
 
 app.get("*", function (req, res) {

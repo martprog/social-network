@@ -1,20 +1,18 @@
 import { Component } from "react";
 
-export default class Uploader extends Component{
-
-    constructor(props){
+export default class Uploader extends Component {
+    constructor(props) {
         super(props);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    onSubmit(e){
-        console.log('is submitting: ');
+    onSubmit(e) {
+        console.log("is submitting: ");
         e.preventDefault();
 
         const formData = new FormData(e.target);
-       
+
         // formData.append("image", this.imageFile);
-        
 
         fetch("/user/profile_picture", {
             method: "POST",
@@ -26,10 +24,10 @@ export default class Uploader extends Component{
                 this.props.onUpload(data.profile_picture_url);
             });
     }
-    
+
     render() {
         return (
-            <div  className="modal">
+            <div className="modal">
                 <div onClick={this.props.closeModal} id="closeBtn">
                     &times;
                 </div>
@@ -49,6 +47,4 @@ export default class Uploader extends Component{
             </div>
         );
     }
-        
-    
 }

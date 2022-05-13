@@ -38,7 +38,7 @@ export default class BioEditor extends Component{
     renderForm(){
         return(
             <form onSubmit={this.onSubmit}>
-                <textarea name="bio"></textarea>
+                <textarea name="bio" >{this.props.bio}</textarea>
                 <div className="textareaBtns">
                     <button className="btns">Done!</button>
                     <button className="btns" type="button" onClick={this.notEditing}>Cancel</button>

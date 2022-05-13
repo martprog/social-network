@@ -19,14 +19,14 @@ export default function Main ({ first, last, bio, onBioUpload, profile_picture_u
                     // openModal={this.openModal}
                 />
             </div>
-            <div className="findWrapper">
-                <Link to="/findusers">Find people</Link>
-                <FindPeople
-                     
-                    // onBioUpload={this.onBioUpload}
-                    // openModal={this.openModal}
-                />
-            </div>
+            
+            
+            <FindPeople
+                    
+                // onBioUpload={this.onBioUpload}
+                // openModal={this.openModal}
+            />
+            
         </div>
     );
 }

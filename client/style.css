@@ -78,6 +78,7 @@ main{
 }
 
 .header{
+    position: relative;
     display: flex;
     background-color: pink;
     border-radius: 12px;
@@ -89,6 +90,27 @@ main{
     margin-bottom: 20px;
     margin-top: 30px;
 
+}
+
+#menus{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #d6d7da;
+    border-radius: 12px;
+    z-index: 10;
+    padding: 4px;
+}
+
+#menus div{
+    text-decoration: none;
+    padding: 6px;
+
+}
+
+#menus div:hover{
+    background-color: #72767d;
 }
 
 .header h1{
@@ -134,18 +156,71 @@ main{
 }
 
 .profileContainer{
+    position: relative;
     display: flex;
-    gap: 50px;
+    flex-direction: column;
+    /* gap: 50px; */
     /* border: 2px solid black; */
-    height: 20em;
+    height: 30em;
     /* margin: 0 40px ; */
-    padding: 12px;
+    width: 500px;
+    /* padding: 12px; */
     background-color: #36393f;
     color: #d6d7da;
     /* border: 2px solid #202225; */
     border-radius: 12px;
 }
 
+.profileContainer img{
+    height: 100px;
+    position: absolute;
+    top: 50px;
+    left: 60px;
+    align-self: center;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profileRectangle{
+    background-color: #d6d7da;
+    height: 120px;
+    width: 100%;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.profiles{
+    display: flex;
+    flex-direction: column;
+    background-color: #72767d;
+}
+
+
+.otherProfile{
+    background-color: #72767d;
+    display: flex;
+    flex-direction: column;
+}
+
+.multi-wrapper{
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 80px;
+    border-radius: 12px;
+}
+
+.wrapperRouter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about{
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    margin-top: 30px;
+}
 
 .textContainer{
     height: 100px;
@@ -197,13 +272,7 @@ textarea{
 }
 
 
-.profileContainer img{
-    height: 250px;
-    align-self: center;
-    width: 250px;
-    border-radius: 50%;
-    object-fit: cover;
-}
+
 
 
 
@@ -296,7 +365,7 @@ input:focus{
 .mainWrapper{
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .findWrapper{
@@ -332,6 +401,7 @@ input:focus{
 
 .modal{
     position: fixed;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: center;

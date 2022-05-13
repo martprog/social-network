@@ -161,6 +161,17 @@ const getUsersByQuery = (search, id) => {
     });
 };
 
+const getOtherUserProfile = (id) => {
+    const query = `
+        SELECT * FROM users
+        WHERE id=$1
+    `;
+
+    return db.query(query, [id]).then((results) => {
+        return results.rows[0];
+    });
+};
+
 module.exports = {
     createUser,
     login,
@@ -172,4 +183,5 @@ module.exports = {
     updateBio,
     getLatestUsers,
     getUsersByQuery,
+    getOtherUserProfile
 };

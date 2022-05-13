@@ -35,7 +35,7 @@ export default class Registration extends Component {
                     this.setState({ error: true });
                 }
                 if (result.succes == true){
-                    location.reload();
+                    location.replace("/");
                     this.setState({ error: false });
                 }
             })

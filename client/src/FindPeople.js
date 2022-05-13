@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function FindPeople() {
     const [search, setSearch] = useState("");
@@ -10,6 +11,7 @@ export default function FindPeople() {
 
     useEffect(() => {
         let abort = false;
+        console.log(window.location.pathname);
 
         fetch(`/users?search=${search}`)
             .then((res) => res.json())
@@ -26,12 +28,16 @@ export default function FindPeople() {
         return users.map((user) => {
             return (
                 <>
-                    <div className="usersFind" key={user.id}>
-                        <img
-                            src={user.profile_picture_url || "./default.png"}
-                        />
-                        <h3>{user.first}</h3>
-                    </div>
+                    <Link to={`/users/${user.id}`}>
+                        <div className="usersFind" key={user.id}>
+                            <img
+                                src={
+                                    user.profile_picture_url || "./default.png"
+                                }
+                            />
+                            <h3>{user.first}</h3>
+                        </div>
+                    </Link>
                 </>
             );
         });
@@ -41,12 +47,12 @@ export default function FindPeople() {
 
     const people = !search ? "These people just joined in" : "Your results";
 
-    
+  
 
     return (
         <>
             {/* {!onFriends? renderFriends(): searchFriends()} */}
-            <div>
+            <div className={location.pathname == '/find'? 'findWrapper': 'profiles'}>
                 <h1>Find people</h1>
                 <p>Are you looking for someone?</p>
                 <input onChange={handleChange}></input>
