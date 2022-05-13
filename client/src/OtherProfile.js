@@ -2,6 +2,13 @@ import { useState, useEffect } from "react";
 
 import { useParams, useHistory } from "react-router";
 
+import {
+    Transition,
+    CSSTransition,
+    SwitchTransition,
+    TransitionGroup,
+} from "react-transition-group";
+
 export default function OtherProfile() {
     const [otherProfile, setOtherProfile] = useState({});
 
@@ -21,23 +28,28 @@ export default function OtherProfile() {
             });
     }, []);
 
-    
     return (
         <>
-            <div className="profileContainer">
-                <div className="profileRectangle"></div>
-                <div className="about">
-                    <div>
-                        <img src={otherProfile.profile_picture_url} />
+            <CSSTransition
+                in={otherProfile}
+                timeout={700}
+                classNames="list-transition"
+                appear
+            >
+                <div className="profileContainer">
+                    <div className="profileRectangle"></div>
+                    <div className="about">
+                        <div>
+                            <img src={otherProfile.profile_picture_url} />
+                        </div>
+                        <h2>
+                            {otherProfile.first} {otherProfile.last}
+                        </h2>
+                        <p>ABOUT ME</p>
+                        <p>{otherProfile.bio}</p>
                     </div>
-                    <h2>
-                        {otherProfile.first} {otherProfile.last}
-                    </h2>
-                    <p>ABOUT ME</p>
-                    <p>{otherProfile.bio}</p>
                 </div>
-                {/* <Link to="/findusers">Find people</Link> */}
-            </div>
+            </CSSTransition>
         </>
     );
 }

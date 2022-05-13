@@ -28,7 +28,10 @@ export default function FindPeople() {
         return users.map((user) => {
             return (
                 <>
-                    <Link to={`/users/${user.id}`}>
+                    <Link
+                        style={{ textDecoration: "none" }}
+                        to={`/users/${user.id}`}
+                    >
                         <div className="usersFind" key={user.id}>
                             <img
                                 src={
@@ -52,15 +55,17 @@ export default function FindPeople() {
     return (
         <>
             {/* {!onFriends? renderFriends(): searchFriends()} */}
-            <div className={location.pathname == '/find'? 'findWrapper': 'profiles'}>
+            <div className="find-megawrapper">
                 <h1>Find people</h1>
-                <p>Are you looking for someone?</p>
-                <input onChange={handleChange}></input>
-                <h2>{people}</h2>
-                <div className="allResults">
-                    {users.length >= 1 ? mappedUsers():<p>no matches found</p>}
-
+                <div className={location.pathname == '/find'? 'findWrapper': 'profiles'}>
+                    <p>Are you looking for someone?</p>
+                    <input onChange={handleChange}></input>
+                    <h2>{people}</h2>
+                    <div className="allResults">
+                        {users.length >= 1 ? mappedUsers():<p>no matches found</p>}
+                    </div>
                 </div>
+
             </div>
         </>
     );

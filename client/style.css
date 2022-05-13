@@ -33,6 +33,10 @@ main{
     margin: 0 40px;
 }
 
+.wrapper img:hover{
+    cursor: pointer;
+}
+
 .logo-name{
     font-size: 40px;
     text-shadow: -1px 0 pink, 0 1px pink, 1px 0 pink, 0 -1px pink;
@@ -172,13 +176,14 @@ main{
 }
 
 .profileContainer img{
-    height: 100px;
+    height: 120px;
+    width: 120px;
     position: absolute;
-    top: 50px;
+    top: 60px;
     left: 60px;
     align-self: center;
-    width: 100px;
     border-radius: 50%;
+    border: 7px solid #36393f;
     object-fit: cover;
 }
 
@@ -194,6 +199,32 @@ main{
     display: flex;
     flex-direction: column;
     background-color: #72767d;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.findWrapper{
+    display: flex;
+    flex-direction: column;
+    background-color: #72767d;
+    padding: 20px;
+    /* width: 400px;
+    height: 500px; */
+    border-radius: 12px;
+    overflow: scroll;
+}
+
+.find-megawrapper h1{
+    text-shadow: none;
+    color: white;
+    font-weight: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.find-megawrapper h2{
+    color: pink;
+    font-weight: bolder;
 }
 
 
@@ -204,15 +235,17 @@ main{
 }
 
 .multi-wrapper{
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(222, 187, 123, 0.6);
     padding: 80px;
     border-radius: 12px;
+   
 }
 
 .wrapperRouter{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
 
 .about{
@@ -368,15 +401,7 @@ input:focus{
     /* width: 100%; */
 }
 
-.findWrapper{
-    display: flex;
-    flex-direction: column;
-    background-color: #72767d;
-    padding: 20px;
-    width: 400px;
-    height: 500px;
-    overflow: scroll;
-}
+
 
 
 
@@ -480,6 +505,11 @@ input:focus{
     margin-top: 20px;
     display: flex;
     flex-direction: column;
+    text-align: center;
+}
+
+.usersFind h3{
+    color: #d6d7da;
 }
 
 
@@ -492,6 +522,38 @@ input:focus{
 }
 
 
+.list-transition-enter, .list-transition-appear {
+  opacity: 0;
+  transform:translateX(-100%);
+}
+/* This is where we can add the transition*/
+.list-transition-enter-active, .list-transition-appear-active {
+    opacity: 1;
+  transform:translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+
+/* .example-exit {
+  opacity: 1;
+  transform:translateX(0);
+}
+.example-exit-active {
+  opacity: 0;
+  transform:translateX(-100%);
+  transition: opacity 300ms, transform 300ms;
+} */
+
+.profile-transition-enter, .profile-transition-appear {
+  opacity: 0;
+  
+}
+
+.profile-transition-enter-active, .profile-transition-appear-active {
+    opacity: 1;
+  
+  transition: opacity 400ms, transform 500ms;
+}
 
 /* @keyframes slide {
     0% {

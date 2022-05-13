@@ -1,23 +1,28 @@
 import { Component } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import {
+    Transition,
+    CSSTransition,
+    SwitchTransition,
+    TransitionGroup,
+} from "react-transition-group";
 import ProfilePic from "./ProfilePic";
 import Uploader from "./Uploader";
 import Profile from "./Profile";
 import FindPeople from "./FindPeople";
 import Main from "./Main";
-import OtherProfile from "./OtherProfile"
+import OtherProfile from "./OtherProfile";
 
 export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             modalOn: false,
-            profile_picture_url:
-                "./default.png",
+            profile_picture_url: "./default.png",
             first: "",
             last: "",
             bio: "",
-            clicked: false
+            clicked: false,
         };
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -25,89 +30,87 @@ export default class App extends Component {
         this.onUpload = this.onUpload.bind(this);
         this.onBioUpload = this.onBioUpload.bind(this);
         this.menuList = this.menuList.bind(this);
-        this.renderList = this.renderList.bind(this)
+        this.renderList = this.renderList.bind(this);
     }
 
     componentDidMount() {
         fetch("/user/me.json")
             .then((res) => res.json())
             .then((data) => {
-                
-                if(data.profile_picture_url){
+                if (data.profile_picture_url) {
                     this.setState(data);
-                    
-                }else{
-                    this.setState({first: data.first});
+                } else {
+                    this.setState({ first: data.first });
                 }
-                
             });
     }
 
     openModal() {
-        
         this.setState({ modalOn: true });
     }
 
     closeModal(e) {
         console.log(e.target);
-        
+
         this.setState({ modalOn: false });
     }
 
     onUpload(picUrl) {
-        
-        this.setState({ modalOn: false, profile_picture_url: picUrl });   
+        this.setState({ modalOn: false, profile_picture_url: picUrl });
     }
 
     handlePicChange(e) {
-        
         this.setState({ picFile: e.target.value });
     }
 
-    onBioUpload(newBio){
-        this.setState({bio: newBio});
+    onBioUpload(newBio) {
+        this.setState({ bio: newBio });
     }
 
-    menuList(){
+    menuList() {
         console.log("clicked!");
-        if(!this.state.clicked){
-            this.setState({clicked: true});
-        }else{
-            this.setState({ clicked: false});
+        if (!this.state.clicked) {
+            this.setState({ clicked: true });
+        } else {
+            this.setState({ clicked: false });
         }
     }
 
-    renderList (){
+    renderList() {
         return (
             <>
-                <div id="menus" onClose={this.menuList}>
-                    <div>
-                        <Link onClick={this.menuList} to="/findusers">
-                            Add friends
-                        </Link>
+                <CSSTransition
+                    in={this.state.clicked}
+                    timeout={400}
+                    classNames="list-transition"
+                    appear
+                >
+                    <div id="menus" onClose={this.menuList}>
+                        <div>
+                            <Link onClick={this.menuList} to="/findusers">
+                                Add friends
+                            </Link>
+                        </div>
+                        <div>
+                            <Link onClick={this.menuList} to="/find">
+                                Homepage
+                            </Link>
+                        </div>
+                        <div>
+                            <Link onClick={this.menuList} to="/">
+                                Edit your profile
+                            </Link>
+                        </div>
+                        <div>
+                            <Link>Logout</Link>
+                        </div>
                     </div>
-                    <div>
-                        <Link onClick={this.menuList} to="/find">
-                            Homepage
-                        </Link>
-                    </div>
-                    <div>
-                        <Link onClick={this.menuList} to="/">
-                            Edit your profile
-                        </Link>
-                    </div>
-                    <div>
-                        <Link onClick={this.menuList} to="/findusers">
-                            Add friends
-                        </Link>
-                    </div>
-                </div>
+                </CSSTransition>
             </>
         );
     }
 
     render() {
-        
         return (
             <>
                 <BrowserRouter>
@@ -115,17 +118,14 @@ export default class App extends Component {
                         onClick={this.state.clicked ? this.menuList : ""}
                         className="wrapper"
                     >
-                        <div
-                            className="header"
-                            
-                        >
+                        <div className="header">
                             <img
                                 onClick={this.menuList}
                                 className="logo"
                                 src="/peanut.png"
                             />
                             {this.state.clicked ? this.renderList() : ""}
-                            
+
                             <h1>Welcome, {this.state.first}!</h1>
                             <ProfilePic
                                 url={this.state.profile_picture_url}
@@ -140,8 +140,7 @@ export default class App extends Component {
                             />
                         )}
                         <div className="multi-wrapper">
-
-                            <div className="wrapperRouter" >
+                            <div className="wrapperRouter">
                                 <Route path="/find">
                                     <Main
                                         {...this.state}
@@ -155,7 +154,6 @@ export default class App extends Component {
                                         onBioUpload={this.onBioUpload}
                                         openModal={this.openModal}
                                     />
-                                    <Link to="/find">Find friends</Link>
                                 </Route>
                                 <Route path="/findusers">
                                     <FindPeople
