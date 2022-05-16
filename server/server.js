@@ -13,6 +13,10 @@ const {
     getLatestUsers,
     getUsersByQuery,
     getOtherUserProfile,
+    getFriendship,
+    sendFriendship,
+    acceptFriendship,
+    removeFriendship,
 } = require("../database/db");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
@@ -123,6 +127,46 @@ app.get("/api/users/:otherUserId", (req, res) => {
             return;
         }
         res.json(data);
+    });
+});
+
+app.get("/api/users_friendship/:otherUserId", (req, res) => {
+    const { userId } = req.session;
+    const { otherUserId } = req.params;
+
+    getFriendship(userId, parseInt(otherUserId))
+        .then((data) => {
+            // console.log('data: ', data);
+            if (!data) {
+                res.json({ noFriendship: true });
+                return;
+            }
+            res.json(data);
+        })
+        .catch((e) => console.log("error fetching friendship: ", e));
+});
+
+app.post("/api/send_friendship/:otherUserId", (req, res) => {
+    const { userId } = req.session;
+    const { otherUserId } = req.params;
+    sendFriendship(userId, parseInt(otherUserId)).then((data) => {
+        res.json({message: 'ok'});
+    });
+});
+app.post("/api/accept_friendship/:otherUserId", (req, res) => {
+    const { userId } = req.session;
+    const { otherUserId } = req.params;
+    acceptFriendship(userId, parseInt(otherUserId)).then((data) => {
+        res.json({ message: "ok" });
+
+    });
+});
+app.post("/api/remove_friendship/:otherUserId", (req, res) => {
+    const { userId } = req.session;
+    const { otherUserId } = req.params;
+    removeFriendship(userId, parseInt(otherUserId)).then((data) => {
+        res.json({ message: "ok" });
+
     });
 });
 

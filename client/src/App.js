@@ -87,22 +87,34 @@ export default class App extends Component {
                 >
                     <div id="menus" onClose={this.menuList}>
                         <div>
-                            <Link onClick={this.menuList} to="/findusers">
+                            <Link
+                                style={{ textDecoration: "none" }}
+                                onClick={this.menuList}
+                                to="/findusers"
+                            >
                                 Add friends
                             </Link>
                         </div>
                         <div>
-                            <Link onClick={this.menuList} to="/find">
+                            <Link
+                                style={{ textDecoration: "none" }}
+                                onClick={this.menuList}
+                                to="/find"
+                            >
                                 Homepage
                             </Link>
                         </div>
                         <div>
-                            <Link onClick={this.menuList} to="/">
+                            <Link
+                                style={{ textDecoration: "none" }}
+                                onClick={this.menuList}
+                                to="/"
+                            >
                                 Edit your profile
                             </Link>
                         </div>
                         <div>
-                            <Link>Logout</Link>
+                            <Link style={{ textDecoration: "none" }}>Logout</Link>
                         </div>
                     </div>
                 </CSSTransition>

@@ -8,6 +8,7 @@ import {
     SwitchTransition,
     TransitionGroup,
 } from "react-transition-group";
+import FriendButton from "./FriendButton";
 
 export default function OtherProfile() {
     const [otherProfile, setOtherProfile] = useState({});
@@ -35,18 +36,20 @@ export default function OtherProfile() {
                 timeout={700}
                 classNames="list-transition"
                 appear
+                exit
             >
                 <div className="profileContainer">
                     <div className="profileRectangle"></div>
                     <div className="about">
                         <div>
-                            <img src={otherProfile.profile_picture_url} />
+                            <img src={otherProfile.profile_picture_url || "../default.png"} />
                         </div>
                         <h2>
                             {otherProfile.first} {otherProfile.last}
                         </h2>
                         <p>ABOUT ME</p>
                         <p>{otherProfile.bio}</p>
+                        <FriendButton  otherUserId = {otherUserId}/>
                     </div>
                 </div>
             </CSSTransition>

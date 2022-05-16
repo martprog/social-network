@@ -1,4 +1,7 @@
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS gencodes;
+DROP TABLE IF EXISTS friendships;
+
 
 
 CREATE TABLE users (
@@ -18,4 +21,11 @@ CREATE TABLE gencodes (
      email VARCHAR(50) NOT NULL,
      code VARCHAR(6) NOT NULL,
      created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE friendships (
+     id SERIAL PRIMARY KEY,
+     sender_id INT REFERENCES users(id) NOT NULL,
+     recipient_id INT REFERENCES users(id) NOT NULL,
+     accepted BOOLEAN DEFAULT false
 );

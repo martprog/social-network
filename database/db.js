@@ -172,6 +172,64 @@ const getOtherUserProfile = (id) => {
     });
 };
 
+const getFriendship = (userId, otherUserId) => {
+    const query = `
+        SELECT * FROM friendships
+        WHERE (sender_id=$1 AND recipient_id=$2)
+        OR (sender_id=$2 AND recipient_id=$1)
+    `;
+
+    const params = [userId, otherUserId];
+
+    return db.query(query, params).then((results) => {
+        return results.rows[0];
+    });
+};
+
+const sendFriendship = (userId, otherUserId) => {
+    const query = `
+        INSERT INTO friendships(sender_id, recipient_id)
+        VALUES ($1, $2)
+        RETURNING *
+    `;
+
+    const params = [userId, otherUserId];
+
+    return db.query(query, params).then((results) => {
+        return results.rows[0];
+    });
+};
+
+const acceptFriendship = (userId, otherUserId) => {
+    const query = `
+        UPDATE friendships
+        SET accepted='true'
+        WHERE sender_id=$2 AND recipient_id=$1 
+        RETURNING *
+    `;
+
+    const params = [userId, otherUserId];
+
+    return db.query(query, params).then((results) => {
+        return results.rows[0];
+    });
+};
+
+const removeFriendship = (userId, otherUserId) => {
+    const query = `
+        DELETE FROM friendships
+        WHERE (sender_id=$1 AND recipient_id=$2) 
+        OR (sender_id=$2 AND recipient_id=$1)
+        RETURNING *
+    `;
+
+    const params = [userId, otherUserId];
+
+    return db.query(query, params).then((results) => {
+        return results.rows[0];
+    });
+};
+
 module.exports = {
     createUser,
     login,
@@ -183,5 +241,9 @@ module.exports = {
     updateBio,
     getLatestUsers,
     getUsersByQuery,
-    getOtherUserProfile
+    getOtherUserProfile,
+    getFriendship,
+    sendFriendship,
+    acceptFriendship,
+    removeFriendship,
 };
