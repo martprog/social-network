@@ -114,7 +114,7 @@ export default class App extends Component {
                             </Link>
                         </div>
                         <div>
-                            <Link style={{ textDecoration: "none" }}>Logout</Link>
+                            <a href="/logout">Logout</a>
                         </div>
                     </div>
                 </CSSTransition>

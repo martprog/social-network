@@ -110,7 +110,9 @@ main{
 #menus div{
     text-decoration: none;
     padding: 6px;
-
+}
+#menus a{
+    text-decoration: none;
 }
 
 #menus div:hover{
