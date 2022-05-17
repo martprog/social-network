@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import {
+    Transition,
+    CSSTransition,
+    SwitchTransition,
+    TransitionGroup,
+} from "react-transition-group";
 
 export default function FindPeople() {
     const [search, setSearch] = useState("");
@@ -32,13 +38,13 @@ export default function FindPeople() {
                         style={{ textDecoration: "none" }}
                         to={`/users/${user.id}`}
                     >
-                        <div className="usersFind" key={user.id}>
+                        <div className={!search?"usersFind":  location.pathname == "/find"?'searchedFind':'searchedAdd'} key={user.id}>
                             <img
                                 src={
                                     user.profile_picture_url || "./default.png"
                                 }
                             />
-                            <h3>{user.first}</h3>
+                            <h3>{user.first} {user.last}</h3>
                         </div>
                     </Link>
                 </>
@@ -55,18 +61,36 @@ export default function FindPeople() {
     return (
         <>
             {/* {!onFriends? renderFriends(): searchFriends()} */}
-            <div className="find-megawrapper">
-                <h1>Find people</h1>
-                <div className={location.pathname == '/find'? 'findWrapper': 'profiles'}>
-                    <p>Are you looking for someone?</p>
-                    <input onChange={handleChange}></input>
-                    <h2>{people}</h2>
-                    <div className="allResults">
-                        {users.length >= 1 ? mappedUsers():<p>no matches found</p>}
+            <CSSTransition
+                in={search}
+                timeout={700}
+                classNames="list-transition"
+                appear
+                exit
+            >
+                <div className="find-megawrapper">
+                    <h1>Find people</h1>
+                    <div
+                        className={
+                            location.pathname == "/find"
+                                ? "findWrapper"
+                                : "profiles"
+                        }
+                    >
+                        <p>Are you looking for someone?</p>
+                        <input onChange={handleChange}></input>
+                        <h2>{people}</h2>
+
+                        <div className={!search ? "allResults" :  location.pathname == "/find"? "searched": 'new'}>
+                            {users.length >= 1 ? (
+                                mappedUsers()
+                            ) : (
+                                <p>no matches found</p>
+                            )}
+                        </div>
                     </div>
                 </div>
-
-            </div>
+            </CSSTransition>
         </>
     );
 }

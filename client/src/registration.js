@@ -61,44 +61,49 @@ export default class Registration extends Component {
                         classNames="registration-transition"
                         appear
                     >
-                        <div className="registration">
-                            <h1>Create account</h1>
-                            {this.state.error && (
-                                <p className="wronglog">
-                                    Oops, something went wrong!
+                        <div className={this.state.error ? "wronglog" : ""}>
+                            <div className="registration">
+                                <h1>Create account</h1>
+                                {this.state.error && (
+                                    <p className="p_log">
+                                        Oops, something went wrong!
+                                    </p>
+                                )}
+                                <form
+                                    className="form"
+                                    onSubmit={this.handleSubmit}
+                                >
+                                    <input
+                                        onChange={this.handleChange}
+                                        placeholder="First Name"
+                                        type="text"
+                                        name="first"
+                                    ></input>
+                                    <input
+                                        onChange={this.handleChange}
+                                        placeholder="Last Name"
+                                        type="text"
+                                        name="last"
+                                    ></input>
+                                    <input
+                                        onChange={this.handleChange}
+                                        placeholder="E-mail"
+                                        type="email"
+                                        name="email"
+                                    ></input>
+                                    <input
+                                        onChange={this.handleChange}
+                                        placeholder="Password"
+                                        type="password"
+                                        name="password"
+                                    ></input>
+                                    <button id="submitReg">Submit</button>
+                                </form>
+                                <p>
+                                    Already a member?{" "}
+                                    <Link to="/login">Log in</Link>
                                 </p>
-                            )}
-                            <form className="form" onSubmit={this.handleSubmit}>
-                                <input
-                                    onChange={this.handleChange}
-                                    placeholder="First Name"
-                                    type="text"
-                                    name="first"
-                                ></input>
-                                <input
-                                    onChange={this.handleChange}
-                                    placeholder="Last Name"
-                                    type="text"
-                                    name="last"
-                                ></input>
-                                <input
-                                    onChange={this.handleChange}
-                                    placeholder="E-mail"
-                                    type="email"
-                                    name="email"
-                                ></input>
-                                <input
-                                    onChange={this.handleChange}
-                                    placeholder="Password"
-                                    type="password"
-                                    name="password"
-                                ></input>
-                                <button id="submitReg">Submit</button>
-                            </form>
-                            <p>
-                                Already a member?{" "}
-                                <Link to="/login">Log in</Link>
-                            </p>
+                            </div>
                         </div>
                     </CSSTransition>
                 )}

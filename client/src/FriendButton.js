@@ -65,5 +65,5 @@ export default function FriendButton({ otherUserId }) {
         }
     };
 
-    return <button onClick={changeFriendship}>{btnText}</button>;
+    return <button id="btnFriendship" onClick={changeFriendship}>{btnText}</button>;
 }
