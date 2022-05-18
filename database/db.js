@@ -230,6 +230,25 @@ const removeFriendship = (userId, otherUserId) => {
     });
 };
 
+const getFriendsAndReqs = (id) => {
+    const query = `
+        SELECT users.id, friendships.sender_id, friendships.recipient_id, friendships.accepted, users.first, users.last, users.profile_picture_url
+        from friendships
+        JOIN users
+        ON (friendships.sender_id = users.id OR friendships.recipient_id = users.id)
+        WHERE (sender_id=$1 AND accepted='true')
+        OR (recipient_id=$1)
+    `;
+
+    return db.query(query, [id]).then((results) => {
+        return results.rows.filter((result) => {
+            if (result.id !== id) {
+                return result;
+            }
+        });
+    });
+};
+
 module.exports = {
     createUser,
     login,
@@ -246,4 +265,5 @@ module.exports = {
     sendFriendship,
     acceptFriendship,
     removeFriendship,
+    getFriendsAndReqs,
 };

@@ -10,7 +10,7 @@ import {
 export default function FindPeople() {
     const [search, setSearch] = useState("");
     const [users, setUsers] = useState([]);
-    
+
     const handleChange = (e) => {
         setSearch(e.target.value);
     };
@@ -33,30 +33,36 @@ export default function FindPeople() {
     const mappedUsers = () => {
         return users.map((user) => {
             return (
-                <>
+                <div key={user.id}>
                     <Link
                         style={{ textDecoration: "none" }}
                         to={`/users/${user.id}`}
                     >
-                        <div className={!search?"usersFind":  location.pathname == "/find"?'searchedFind':'searchedAdd'} key={user.id}>
+                        <div
+                            className={
+                                !search
+                                    ? "usersFind"
+                                    : location.pathname == "/find"
+                                    ? "searchedFind"
+                                    : "searchedAdd"
+                            }
+                        >
                             <img
                                 src={
                                     user.profile_picture_url || "./default.png"
                                 }
                             />
-                            <h3>{user.first} {user.last}</h3>
+                            <h3>
+                                {user.first} {user.last}
+                            </h3>
                         </div>
                     </Link>
-                </>
+                </div>
             );
         });
     };
 
-   
-
     const people = !search ? "These people just joined in" : "Your results";
-
-  
 
     return (
         <>
@@ -81,7 +87,15 @@ export default function FindPeople() {
                         <input onChange={handleChange}></input>
                         <h2>{people}</h2>
 
-                        <div className={!search ? "allResults" :  location.pathname == "/find"? "searched": 'new'}>
+                        <div
+                            className={
+                                !search
+                                    ? "allResults"
+                                    : location.pathname == "/find"
+                                    ? "searched"
+                                    : "new"
+                            }
+                        >
                             {users.length >= 1 ? (
                                 mappedUsers()
                             ) : (

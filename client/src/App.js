@@ -1,17 +1,13 @@
 import { Component } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
-import {
-    Transition,
-    CSSTransition,
-    SwitchTransition,
-    TransitionGroup,
-} from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 import ProfilePic from "./ProfilePic";
 import Uploader from "./Uploader";
 import Profile from "./Profile";
 import FindPeople from "./FindPeople";
 import Main from "./Main";
 import OtherProfile from "./OtherProfile";
+import Friends from "./Friends";
 
 export default class App extends Component {
     constructor(props) {
@@ -122,12 +118,14 @@ export default class App extends Component {
         );
     }
 
+    
+
     render() {
         return (
             <>
                 <BrowserRouter>
                     <div
-                        onClick={this.state.clicked ? this.menuList : ""}
+                        onClick={this.state.clicked ? this.menuList : () => {}}
                         className="wrapper"
                     >
                         <div className="header">
@@ -137,6 +135,7 @@ export default class App extends Component {
                                 src="/peanut.png"
                             />
                             {this.state.clicked ? this.renderList() : ""}
+                            <Link to="/friends">Friends</Link>
 
                             <h1>Welcome, {this.state.first}!</h1>
                             <ProfilePic
@@ -176,6 +175,9 @@ export default class App extends Component {
                                 </Route>
                                 <Route path="/users/:otherUserId">
                                     <OtherProfile />
+                                </Route>
+                                <Route path="/friends">
+                                    <Friends />
                                 </Route>
                             </div>
                         </div>

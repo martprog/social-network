@@ -17,6 +17,7 @@ const {
     sendFriendship,
     acceptFriendship,
     removeFriendship,
+    getFriendsAndReqs,
 } = require("../database/db");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
@@ -150,7 +151,7 @@ app.post("/api/send_friendship/:otherUserId", (req, res) => {
     const { userId } = req.session;
     const { otherUserId } = req.params;
     sendFriendship(userId, parseInt(otherUserId)).then((data) => {
-        res.json({message: 'ok'});
+        res.json({ message: "ok" });
     });
 });
 app.post("/api/accept_friendship/:otherUserId", (req, res) => {
@@ -158,7 +159,6 @@ app.post("/api/accept_friendship/:otherUserId", (req, res) => {
     const { otherUserId } = req.params;
     acceptFriendship(userId, parseInt(otherUserId)).then((data) => {
         res.json({ message: "ok" });
-
     });
 });
 app.post("/api/remove_friendship/:otherUserId", (req, res) => {
@@ -166,7 +166,13 @@ app.post("/api/remove_friendship/:otherUserId", (req, res) => {
     const { otherUserId } = req.params;
     removeFriendship(userId, parseInt(otherUserId)).then((data) => {
         res.json({ message: "ok" });
+    });
+});
 
+app.get("/api/friends", (req, res) => {
+    const { userId } = req.session;
+    getFriendsAndReqs(userId).then((data) => {
+        res.json(data);
     });
 });
 

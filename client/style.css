@@ -246,8 +246,12 @@ main{
     overflow: scroll;
     background-color: #d6d7da;
     padding: 12px;
-    
-    
+}
+
+.friended, .requested{
+    height: 300px;
+    margin-top: 10px;
+    border: 2px solid black;
 }
 
 .new img{
@@ -562,7 +566,7 @@ animation: shake 400ms cubic-bezier(.36,.07,.19,.97) both;
     cursor: pointer;
 }
 
-#btnFriendship {
+.btnFriendship {
     background-color: rgb(58, 148, 89);
     cursor: pointer;
     color: #fff;
@@ -574,14 +578,19 @@ animation: shake 400ms cubic-bezier(.36,.07,.19,.97) both;
     box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
 }
 
-#btnFriendship:hover{
+.btnFriendship:hover{
     /* transform: scale(1.04); */
     background-color: rgba(58, 148, 89, 0.8);
 }
 
-#btnFriendship:active{
+.btnFriendship:active{
     transform: scale(0.93);
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
+
+.friendReq{
+    align-self: center;
+    box-shadow: none;
 }
 
 
@@ -605,12 +614,19 @@ animation: shake 400ms cubic-bezier(.36,.07,.19,.97) both;
 
 
 
-.usersFind img{
+.usersFind img, .friendships img, .requests img{
     width: 100px;
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
 }
+
+.friendships, .requests {
+    display: flex;
+    flex-direction: column;
+    background-color: #72767d;
+}
+
 
 
 .login-transition-enter, .login-transition-appear {
