@@ -46,7 +46,7 @@ export default class App extends Component {
     }
 
     closeModal(e) {
-        console.log(e.target);
+        
 
         this.setState({ modalOn: false });
     }
@@ -64,7 +64,6 @@ export default class App extends Component {
     }
 
     menuList() {
-        console.log("clicked!");
         if (!this.state.clicked) {
             this.setState({ clicked: true });
         } else {
@@ -117,8 +116,6 @@ export default class App extends Component {
             </>
         );
     }
-
-    
 
     render() {
         return (

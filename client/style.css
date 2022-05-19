@@ -235,28 +235,36 @@ main{
     background-color: #72767d;
     padding: 20px;
     border-radius: 12px;
+    width: 745px;
 }
 
 .new{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     width: 700px;
-    height: 400px;
+    height: 70vh;
     overflow: scroll;
     background-color: #d6d7da;
     padding: 12px;
 }
 
+.newed{
+    width: 450px;
+    height: 50vh;
+}
+
+
+
 .friended, .requested{
-    height: 300px;
+    /* height: 300px; */
     margin-top: 10px;
-    border: 2px solid black;
+    border-radius: 12px;
 }
 
 .new img{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -265,7 +273,19 @@ main{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 200px
+    /* width: 200px */
+    padding: 14px;
+}
+
+.searchedAdd h3{
+    width: 100px;
+    text-align: center;
+}
+
+.searchedAdd p{
+    margin: 4px;
+    width: 60px;
+    text-align: center;
 }
 
 .findWrapper{
@@ -313,6 +333,15 @@ main{
     justify-content: space-between;
 }
 
+.friendsWrapper{
+    display: flex;
+    
+}
+
+.friendsAndReqsWrapper{
+    display: flex;
+    flex-direction: column;
+}
 .about{
     display: flex;
     flex-direction: column;
@@ -591,8 +620,24 @@ animation: shake 400ms cubic-bezier(.36,.07,.19,.97) both;
 .friendReq{
     align-self: center;
     box-shadow: none;
+    padding: 9px;
 }
 
+.friendsAndReqsWrapper{
+    margin: 10px;
+    margin-bottom: 35px;
+    display: flex;
+    flex-direction: column;
+}
+
+.friendsAndReqIcon{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.warn{
+    background: url("./public/default.png");
+}
 
 .allResults{
     display: flex;

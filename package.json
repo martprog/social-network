@@ -52,6 +52,7 @@
         "socket.io": "^3.0.4",
         "socket.io-client": "^3.0.4",
         "spiced-pg": "^1.0.4",
+        "sweetalert": "^2.1.2",
         "ts-loader": "^9.2.4",
         "typescript": "^4.3.5",
         "uid-safe": "^2.1.4",

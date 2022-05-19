@@ -17,7 +17,6 @@ export default function FindPeople() {
 
     useEffect(() => {
         let abort = false;
-        console.log(window.location.pathname);
 
         fetch(`/users?search=${search}`)
             .then((res) => res.json())
@@ -67,44 +66,44 @@ export default function FindPeople() {
     return (
         <>
             {/* {!onFriends? renderFriends(): searchFriends()} */}
-            <CSSTransition
+            {/* <CSSTransition
                 in={search}
                 timeout={700}
                 classNames="list-transition"
                 appear
                 exit
-            >
-                <div className="find-megawrapper">
-                    <h1>Find people</h1>
+            > */}
+            <div className="find-megawrapper">
+                <h1>Find people</h1>
+                <div
+                    className={
+                        location.pathname == "/find"
+                            ? "findWrapper"
+                            : "profiles"
+                    }
+                >
+                    <p>Are you looking for someone?</p>
+                    <input onChange={handleChange}></input>
+                    <h2>{people}</h2>
+
                     <div
                         className={
-                            location.pathname == "/find"
-                                ? "findWrapper"
-                                : "profiles"
+                            !search
+                                ? "allResults"
+                                : location.pathname == "/find"
+                                ? "searched"
+                                : "new"
                         }
                     >
-                        <p>Are you looking for someone?</p>
-                        <input onChange={handleChange}></input>
-                        <h2>{people}</h2>
-
-                        <div
-                            className={
-                                !search
-                                    ? "allResults"
-                                    : location.pathname == "/find"
-                                    ? "searched"
-                                    : "new"
-                            }
-                        >
-                            {users.length >= 1 ? (
-                                mappedUsers()
-                            ) : (
-                                <p>no matches found</p>
-                            )}
-                        </div>
+                        {users.length >= 1 ? (
+                            mappedUsers()
+                        ) : (
+                            <p>no matches found</p>
+                        )}
                     </div>
                 </div>
-            </CSSTransition>
+            </div>
+            {/* </CSSTransition> */}
         </>
     );
 }

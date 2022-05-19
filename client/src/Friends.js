@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFriends, accept, unfriend } from "./redux/friends-and-reqs/slice";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
 
 export default function Friends() {
     const dispatch = useDispatch();
@@ -26,12 +27,6 @@ export default function Friends() {
             const data = await res.json();
             dispatch(getFriends(data));
         })();
-
-        // fetch("/api/friends")
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //         dispatch(getFriends(data));
-        //     });
     }, []);
 
     if (!requests || !friends) {
@@ -39,7 +34,6 @@ export default function Friends() {
     }
 
     function handleAccept(id) {
-        console.log("handle func, ", id);
         return fetch(`/api/accept_friendship/${id}`, {
             method: "POST",
             headers: {
@@ -53,6 +47,7 @@ export default function Friends() {
     }
 
     async function handleUnfriend(id) {
+        console.log("hola");
         const res = await fetch(`/api/remove_friendship/${id}`, {
             method: "POST",
         });
@@ -61,7 +56,7 @@ export default function Friends() {
     }
 
     const reqs = (
-        <div>
+        <div className="friendsAndReqIcon">
             {requests.map((request) => {
                 return (
                     <div className="friendsAndReqsWrapper" key={request.id}>
@@ -78,9 +73,9 @@ export default function Friends() {
                                         }
                                     />
                                 </div>
-                                <h3>
+                                <p>
                                     {request.first} {request.last}
-                                </h3>
+                                </p>
                             </div>
                         </Link>
                         <button
@@ -96,7 +91,7 @@ export default function Friends() {
     );
 
     const friendships = (
-        <div>
+        <div className="friendsAndReqIcon">
             {friends.map((friend) => {
                 return (
                     <div className="friendsAndReqsWrapper" key={friend.id}>
@@ -113,15 +108,34 @@ export default function Friends() {
                                         }
                                     />
                                 </div>
-                                <h3>
+                                <p>
                                     {friend.first} {friend.last}
-                                </h3>
+                                </p>
                             </div>
                         </Link>
 
                         <button
                             className="btnFriendship friendReq"
-                            onClick={() => handleUnfriend(friend.id)}
+                            onClick={() => {
+                                swal({
+                                    title: `Sure you want to unfriend ${friend.first}?`,
+                                    text: `You will not be friends anymore!`,
+                                    icon: "warning",
+                                    imageUrl: "./defaul.png",
+                                    buttons: true,
+                                }).then(function (isConfirm) {
+                                    if (isConfirm) {
+                                        handleUnfriend(friend.id);
+                                    } else {
+                                        // swal(
+                                        //     "Cancelled",
+                                        //     "Your imaginary file is safe :)",
+                                        //     "error"
+                                        // );
+                                        return null;
+                                    }
+                                });
+                            }}
                         >
                             unfriend
                         </button>
@@ -134,11 +148,56 @@ export default function Friends() {
     return (
         <>
             <h1>FRIENDS</h1>
-            <div className="new requested">
-                {requests.length >= 1 ? reqs: <h2>No new requests</h2>}
-            </div>
-            <div className="new friended">
-                {friends.length >= 1 ? friendships : <h2>No friends</h2>}
+            <div className="friendsWrapper">
+                <div className="friendsAndReqsWrapper">
+                    {requests.length == 1 ? (
+                        <h2>
+                            You have{" "}
+                            <font color="green" size="6">
+                                {friends.length}
+                            </font>{" "}
+                            friend request!
+                        </h2>
+                    ) : (
+                        <h2>
+                            You have{" "}
+                            <font color="green" size="6">
+                                {requests.length}
+                            </font>{" "}
+                            friend requests!
+                        </h2>
+                    )}
+                    <div className="new newed requested">
+                        {requests.length >= 1 ? reqs : <h2>No new requests</h2>}
+                    </div>
+                </div>
+
+                <div className="friendsAndReqsWrapper">
+                    {friends.length == 1 ? (
+                        <h2>
+                            You have{" "}
+                            <font color="green" size="6">
+                                {friends.length}
+                            </font>{" "}
+                            friend!
+                        </h2>
+                    ) : (
+                        <h2>
+                            You have{" "}
+                            <font color="green" size="6">
+                                {friends.length}
+                            </font>{" "}
+                            friends!
+                        </h2>
+                    )}
+                    <div className="new newed friended">
+                        {friends.length >= 1 ? (
+                            friendships
+                        ) : (
+                            <h2>No friends</h2>
+                        )}
+                    </div>
+                </div>
             </div>
         </>
     );

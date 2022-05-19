@@ -12,6 +12,7 @@ import FriendButton from "./FriendButton";
 
 export default function OtherProfile() {
     const [otherProfile, setOtherProfile] = useState({});
+    const [transition, setTransition] = useState(true)
 
     const { otherUserId } = useParams();
 
@@ -32,7 +33,7 @@ export default function OtherProfile() {
     return (
         <>
             <CSSTransition
-                in={otherProfile}
+                in={transition}
                 timeout={700}
                 classNames="list-transition"
                 appear
