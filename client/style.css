@@ -399,7 +399,11 @@ textarea{
 }
 
 
-
+.chat-wrapper{
+    background-color: #d6d7da;
+    height: 400px;
+    overflow: scroll;
+}
 
 
 

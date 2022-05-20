@@ -8,6 +8,7 @@ import FindPeople from "./FindPeople";
 import Main from "./Main";
 import OtherProfile from "./OtherProfile";
 import Friends from "./Friends";
+import ChatMessages from "./ChatMessages";
 
 export default class App extends Component {
     constructor(props) {
@@ -175,6 +176,9 @@ export default class App extends Component {
                                 </Route>
                                 <Route path="/friends">
                                     <Friends />
+                                </Route>
+                                <Route path="/chatroom">
+                                    <ChatMessages />
                                 </Route>
                             </div>
                         </div>

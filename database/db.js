@@ -249,6 +249,32 @@ const getFriendsAndReqs = (id) => {
     });
 };
 
+const getAllMessages = () => {
+    const query = `
+        SELECT users.first, users.last, users.profile_picture_url, chat_messages.id, chat_messages.sender_id, chat_messages.text FROM chat_messages
+        JOIN users
+        ON chat_messages.sender_id=users.id
+        LIMIT 10
+    `;
+    return db.query(query).then((results) => {
+        return results.rows;
+    });
+};
+
+const createNewMsg = (id, text) => {
+    const query = `
+        INSERT INTO chat_messages(sender_id, text)
+        VALUES($1, $2)
+        RETURNING *
+    `;
+
+    const params = [id, text];
+
+    return db.query(query, params).then((results) => {
+        return results.rows[0];
+    });
+};
+
 module.exports = {
     createUser,
     login,
@@ -266,4 +292,6 @@ module.exports = {
     acceptFriendship,
     removeFriendship,
     getFriendsAndReqs,
+    getAllMessages,
+    createNewMsg
 };

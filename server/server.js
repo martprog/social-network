@@ -1,5 +1,10 @@
 const express = require("express");
 const app = express();
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+});
 const compression = require("compression");
 const path = require("path");
 app.use(compression());
@@ -18,6 +23,8 @@ const {
     acceptFriendship,
     removeFriendship,
     getFriendsAndReqs,
+    getAllMessages,
+    createNewMsg
 } = require("../database/db");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
@@ -39,14 +46,17 @@ const uploader = multer({
     // dest: "uploads",
 });
 
+const cookieSessionMiddleware = cookieSession({
+    secret: secrets.COOKIE_SECRET,
+    maxAge: 1000 * 60 * 60 * 24 * 14,
+    sameSite: true,
+});
+
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
-app.use(
-    cookieSession({
-        secret: secrets.COOKIE_SECRET,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-        sameSite: true,
-    })
-);
+app.use(cookieSessionMiddleware);
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 app.use(express.json());
 
 app.use(logAndReg);
@@ -180,6 +190,42 @@ app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(process.env.PORT || 3001, function () {
+//io
+
+io.on("connection",  async function (socket) {
+    console.log(`socket with the id ${socket.id} is now connected`);
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    }
+
+    const userId = socket.request.session.userId;
+
+    const chatMessages = await getAllMessages();
+
+    socket.emit("chatMessages", chatMessages);
+
+    socket.on("newMessage", async ({text}) => {
+        console.log(text);
+        const sender = await getUserById(userId);
+        const newMsg = await createNewMsg(userId, text);
+        io.emit("newMessage", {
+            first: sender.first,
+            last: sender.last,
+            profile_picture_url: sender.profile_picture_url,
+            ...newMsg 
+        });
+
+    });
+
+    socket.on("disconnect", function () {
+        console.log(`socket with the id ${socket.id} is now disconnected`);
+    });
+
+    socket.emit("welcome", {
+        message: "Welome. It is nice to see you",
+    });
+});
+
+server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
