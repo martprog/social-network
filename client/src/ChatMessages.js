@@ -1,48 +1,48 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMessages, addMessage } from "./redux/messages/slice";
+import { getUserId } from "./redux/sessionId/slice";
+import { Link } from "react-router-dom";
 
 // import { io } from "socket.io-client";
 import { socket } from "./socketInit";
 
 export default function ChatMessages() {
-    const inputRef = useRef(null);
     const lastMessageRef = useRef(null);
     const dispatch = useDispatch();
 
-    // const socket = io();
+    function formatDate(timestamp) {
+        const date = new Date(timestamp);
+        return `${date.toDateString()}`;
+    }
 
     const chatMessages = useSelector(
         (state) => state.chatMessages && state.chatMessages
     );
 
-
-    // socket.on("newMessage", (data)=>{
-    //     console.log('data: ', data)
-    //     dispatch(addMessage(data))
-    // })
+    const userId = useSelector((state) => state.userId && state.userId);
 
     useEffect(() => {
         socket.on("chatMessages", function (data) {
             dispatch(getMessages(data));
         });
 
-        // inputRef.current.focus()
-        
-       
         socket.on("newMessage", (data) => {
             dispatch(addMessage(data));
         });
+
+        socket.on("userId", (data) => {
+            dispatch(getUserId(data));
+        });
     }, []);
 
-    useEffect(()=>{
+    useEffect(() => {
         if (lastMessageRef.current) {
-            console.log(lastMessageRef.current);
-            lastMessageRef.current.scrollIntoView()
+            lastMessageRef.current.scrollIntoView();
         }
-    })
+    });
 
-    const executeScroll = () => lastMessageRef.current.scrollIntoView();  
+    // const executeScroll = () => lastMessageRef.current.scrollIntoView();
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -50,14 +50,46 @@ export default function ChatMessages() {
             text: e.target.text.value,
         });
         e.target.text.value = "";
-        
-
     }
 
     const msgs = chatMessages.map((message) => {
         return (
-            <div key={message.id} ref={lastMessageRef}>
-                <p>{message.text}</p>
+            <div
+                className="msg-container"
+                key={message.id}
+                ref={lastMessageRef}
+            >
+                <img src={message.profile_picture_url} />
+                <div className="msg-details">
+                    <Link
+                        style={{ textDecoration: "none" }}
+                        to={
+                            userId == message.sender_id
+                                ? "/"
+                                : `/users/${message.sender_id}`
+                        }
+                    >
+                        <div className="msg-row">
+                            <p>
+                                <strong>
+                                    {message.first} {message.last}
+                                </strong>{" "}
+                            </p>
+                            <p
+                                className="datechat"
+                                style={{
+                                    marginLeft: ".8rem",
+                                    // width: "12rem",
+                                }}
+                            >
+                                <font size="1">
+                                    {formatDate(message.created_at)}
+                                </font>
+                            </p>
+                        </div>
+                    </Link>
+                    <p>{message.text}</p>
+                </div>
             </div>
         );
     });
@@ -66,16 +98,14 @@ export default function ChatMessages() {
         <>
             <h1>Chat Room</h1>
             <form onSubmit={handleSubmit}>
-                <div className="chat-wrapper" >
+                <div className="chat-wrapper">
                     {chatMessages.length >= 1 ? msgs : <h2>no messages</h2>}
                 </div>
-                {/* <textarea name="text"></textarea> */}
                 <input
                     type="text"
                     name="text"
                     required
                     placeholder="write something"
-                    onClick={executeScroll}
                 />
                 <div className="textareaBtns">
                     <button className="btns">Done!</button>

@@ -251,13 +251,15 @@ const getFriendsAndReqs = (id) => {
 
 const getAllMessages = () => {
     const query = `
-        SELECT users.first, users.last, users.profile_picture_url, chat_messages.id, chat_messages.sender_id, chat_messages.text FROM chat_messages
+        SELECT users.first, users.last, users.profile_picture_url, chat_messages.id, chat_messages.sender_id, chat_messages.text, chat_messages.created_at FROM chat_messages
         JOIN users
         ON chat_messages.sender_id=users.id
+        ORDER BY created_at DESC
         LIMIT 10
     `;
     return db.query(query).then((results) => {
-        return results.rows;
+        const reversedResults = [...results.rows].reverse();
+        return reversedResults;
     });
 };
 
@@ -293,5 +295,5 @@ module.exports = {
     removeFriendship,
     getFriendsAndReqs,
     getAllMessages,
-    createNewMsg
+    createNewMsg,
 };

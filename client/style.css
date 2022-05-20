@@ -400,12 +400,52 @@ textarea{
 
 
 .chat-wrapper{
+   
+    display: flex;
+    flex-direction: column;
     background-color: #d6d7da;
     height: 400px;
+    /* width: 400px; */
     overflow: scroll;
 }
 
+.msg-container{
+    display: flex;
+    border:2px solid #72767d;
+    background-color: #36393f;
+    
+}
 
+.msg-row{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    gap: 10px;
+}
+
+.msg-container img{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+
+}
+
+.msg-details{
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    color: #d6d7da;
+}
+
+.msg-details a {
+    color: #dcddde;
+    outline: none;
+    text-decoration: none;
+}
+
+.datechat{
+    align-self: flex-end;
+}
 
 .login{
    position: absolute;

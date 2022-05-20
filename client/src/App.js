@@ -134,6 +134,7 @@ export default class App extends Component {
                             />
                             {this.state.clicked ? this.renderList() : ""}
                             <Link to="/friends">Friends</Link>
+                            <Link to="/chatroom">Chat</Link>
 
                             <h1>Welcome, {this.state.first}!</h1>
                             <ProfilePic

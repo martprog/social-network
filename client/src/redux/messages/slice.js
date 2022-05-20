@@ -3,8 +3,7 @@ export function chatMessagesReducer(allChatMessages = [], action) {
         allChatMessages = action.payload.allChatMessages;
     } else if (action.type === "newMessage: uploaded") {
         allChatMessages = [...allChatMessages, action.payload.msg];
-    }
-
+    }  
     return allChatMessages;
 }
 
@@ -23,3 +22,4 @@ export function addMessage(msg) {
         },
     };
 }
+

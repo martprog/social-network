@@ -203,9 +203,10 @@ io.on("connection",  async function (socket) {
     const chatMessages = await getAllMessages();
 
     socket.emit("chatMessages", chatMessages);
+    socket.emit("userId", userId);
 
     socket.on("newMessage", async ({text}) => {
-        console.log(text);
+        
         const sender = await getUserById(userId);
         const newMsg = await createNewMsg(userId, text);
         io.emit("newMessage", {
