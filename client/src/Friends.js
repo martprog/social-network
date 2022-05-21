@@ -41,7 +41,7 @@ export default function Friends() {
             },
         })
             .then((res) => res.json())
-            .then((data) => {
+            .then(() => {
                 dispatch(accept(id));
             });
     }

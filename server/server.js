@@ -24,7 +24,7 @@ const {
     removeFriendship,
     getFriendsAndReqs,
     getAllMessages,
-    createNewMsg
+    createNewMsg,
 } = require("../database/db");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
@@ -147,7 +147,6 @@ app.get("/api/users_friendship/:otherUserId", (req, res) => {
 
     getFriendship(userId, parseInt(otherUserId))
         .then((data) => {
-            // console.log('data: ', data);
             if (!data) {
                 res.json({ noFriendship: true });
                 return;
@@ -160,21 +159,21 @@ app.get("/api/users_friendship/:otherUserId", (req, res) => {
 app.post("/api/send_friendship/:otherUserId", (req, res) => {
     const { userId } = req.session;
     const { otherUserId } = req.params;
-    sendFriendship(userId, parseInt(otherUserId)).then((data) => {
+    sendFriendship(userId, parseInt(otherUserId)).then(() => {
         res.json({ message: "ok" });
     });
 });
 app.post("/api/accept_friendship/:otherUserId", (req, res) => {
     const { userId } = req.session;
     const { otherUserId } = req.params;
-    acceptFriendship(userId, parseInt(otherUserId)).then((data) => {
+    acceptFriendship(userId, parseInt(otherUserId)).then(() => {
         res.json({ message: "ok" });
     });
 });
 app.post("/api/remove_friendship/:otherUserId", (req, res) => {
     const { userId } = req.session;
     const { otherUserId } = req.params;
-    removeFriendship(userId, parseInt(otherUserId)).then((data) => {
+    removeFriendship(userId, parseInt(otherUserId)).then(() => {
         res.json({ message: "ok" });
     });
 });
@@ -192,7 +191,7 @@ app.get("*", function (req, res) {
 
 //io
 
-io.on("connection",  async function (socket) {
+io.on("connection", async function (socket) {
     console.log(`socket with the id ${socket.id} is now connected`);
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
@@ -203,27 +202,20 @@ io.on("connection",  async function (socket) {
     const chatMessages = await getAllMessages();
 
     socket.emit("chatMessages", chatMessages);
-    socket.emit("userId", userId);
 
-    socket.on("newMessage", async ({text}) => {
-        
+    socket.on("newMessage", async ({ text }) => {
         const sender = await getUserById(userId);
         const newMsg = await createNewMsg(userId, text);
         io.emit("newMessage", {
             first: sender.first,
             last: sender.last,
             profile_picture_url: sender.profile_picture_url,
-            ...newMsg 
+            ...newMsg,
         });
-
     });
 
     socket.on("disconnect", function () {
         console.log(`socket with the id ${socket.id} is now disconnected`);
-    });
-
-    socket.emit("welcome", {
-        message: "Welome. It is nice to see you",
     });
 });
 

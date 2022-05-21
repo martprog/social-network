@@ -23,6 +23,11 @@ export default function ChatMessages() {
     const userId = useSelector((state) => state.userId && state.userId);
 
     useEffect(() => {
+        (async () => {
+            const res = await fetch("/user/id.json");
+            const data = await res.json();
+            dispatch(getUserId(data.userId));
+        })();
         socket.on("chatMessages", function (data) {
             dispatch(getMessages(data));
         });
@@ -30,19 +35,14 @@ export default function ChatMessages() {
         socket.on("newMessage", (data) => {
             dispatch(addMessage(data));
         });
-
-        socket.on("userId", (data) => {
-            dispatch(getUserId(data));
-        });
     }, []);
+
 
     useEffect(() => {
         if (lastMessageRef.current) {
             lastMessageRef.current.scrollIntoView();
         }
-    });
-
-    // const executeScroll = () => lastMessageRef.current.scrollIntoView();
+    }, [chatMessages]);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -71,9 +71,13 @@ export default function ChatMessages() {
                     >
                         <div className="msg-row">
                             <p>
-                                <strong>
-                                    {message.first} {message.last}
-                                </strong>{" "}
+                                {userId == message.sender_id ? (
+                                    <strong>You</strong>
+                                ) : (
+                                    <strong>
+                                        {message.first} {message.last}
+                                    </strong>
+                                )}
                             </p>
                             <p
                                 className="datechat"
@@ -101,14 +105,17 @@ export default function ChatMessages() {
                 <div className="chat-wrapper">
                     {chatMessages.length >= 1 ? msgs : <h2>no messages</h2>}
                 </div>
-                <input
-                    type="text"
-                    name="text"
-                    required
-                    placeholder="write something"
-                />
-                <div className="textareaBtns">
-                    <button className="btns">Done!</button>
+                <div className="chat-inpBtn">
+                    <input
+                        type="text"
+                        name="text"
+                        required
+                        autoComplete="off"
+                        placeholder="write something"
+                    />
+                    <div className="textareaBtns">
+                        <button className="btns">Done!</button>
+                    </div>
                 </div>
             </form>
         </>

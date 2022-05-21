@@ -82,15 +82,7 @@ export default class App extends Component {
                     appear
                 >
                     <div id="menus" onClose={this.menuList}>
-                        <div>
-                            <Link
-                                style={{ textDecoration: "none" }}
-                                onClick={this.menuList}
-                                to="/findusers"
-                            >
-                                Add friends
-                            </Link>
-                        </div>
+                        
                         <div>
                             <Link
                                 style={{ textDecoration: "none" }}
@@ -133,14 +125,40 @@ export default class App extends Component {
                                 src="/peanut.png"
                             />
                             {this.state.clicked ? this.renderList() : ""}
-                            <Link to="/friends">Friends</Link>
-                            <Link to="/chatroom">Chat</Link>
+                            <nav className="nav-wrapper">
+                                <div>
+                                    <Link
+                                        to="/friends"
+                                        style={{ textDecoration: "none" }}
+                                    >
+                                        Friends
+                                    </Link>
+                                </div>
+                                <div>
+                                    <Link
+                                        to="/findusers"
+                                        style={{ textDecoration: "none" }}
+                                    >
+                                        Add friends
+                                    </Link>
+                                </div>
+                                <div>
+                                    <Link
+                                        to="/chatroom"
+                                        style={{ textDecoration: "none" }}
+                                    >
+                                        Chat
+                                    </Link>
+                                </div>
 
-                            <h1>Welcome, {this.state.first}!</h1>
-                            <ProfilePic
-                                url={this.state.profile_picture_url}
-                                openModal={this.openModal}
-                            />
+                                {/* <h1>Welcome, {this.state.first}!</h1> */}
+                                <div>
+                                    <ProfilePic
+                                        url={this.state.profile_picture_url}
+                                        openModal={this.openModal}
+                                    />
+                                </div>
+                            </nav>
                         </div>
                         {this.state.modalOn && (
                             <Uploader

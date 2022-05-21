@@ -10,15 +10,10 @@ html{
 }
 
 body {
-    /* height: 100vh;
-    background-image: url("/pbback.jpg")   ;
-    background-origin: content-box;
-    background-size: cover; */
-    /* background-repeat: no-repeat; */
+    
     font-family: 'Nunito', serif;
     width: 100%;
-    /* height: 100vh; */
-    /* margin-right: auto; */
+    
 }
 
 main{
@@ -27,7 +22,7 @@ main{
 }
 
 .wrapper{
-    /* height: 100vh; */
+    
     display: flex;
     flex-direction: column;
     margin: 0 40px;
@@ -87,13 +82,32 @@ main{
     background-color: pink;
     border-radius: 12px;
     justify-content: space-between;
-    padding: 12px;
+    /* padding: 12px; */
     padding-left: 60px;
     padding-right: 60px;
     /* margin: 40px; */
     margin-bottom: 20px;
     margin-top: 30px;
 
+}
+
+.nav-wrapper{
+    display: flex;
+    align-items: center;
+    
+}
+
+.nav-wrapper div{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px;
+
+}
+
+.nav-wrapper div:hover{
+    background-color: rgba(0, 0, 0, 0.24);
 }
 
 #menus{
@@ -135,8 +149,8 @@ main{
     /* background-color: black; */
     /* border: 2px solid black; */
     border-radius: 50%;
-    height: 110px;
-    width: 110px;
+    height: 80px;
+    width: 80px;
     object-fit: cover ;
     position: relative;
 }
@@ -184,8 +198,8 @@ main{
 .hovered{
     position: absolute;
     color: white;
-    right: 105px;
-    top: 140px;
+    right: 70px;
+    top: 65px;
     transition: all 100ms;
 }
 
@@ -404,8 +418,8 @@ textarea{
     display: flex;
     flex-direction: column;
     background-color: #d6d7da;
-    height: 400px;
-    /* width: 400px; */
+    height: 600px;
+    /* min-width: 700px; */
     overflow: scroll;
 }
 
@@ -413,7 +427,7 @@ textarea{
     display: flex;
     border:2px solid #72767d;
     background-color: #36393f;
-    
+    padding: 15px;
 }
 
 .msg-row{
@@ -447,6 +461,20 @@ textarea{
     align-self: flex-end;
 }
 
+.chat-inpBtn{
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat-inpBtn input{
+    width: 600px;
+}
+
+.chat-inpBtn .btns{
+    height: 40px;
+}
+
+
 .login{
    position: absolute;
     top: 80px;
@@ -466,8 +494,9 @@ textarea{
 
 .logo{
     background-color: pink;
-    height: 120px;
-    width: 120px;
+    height: 80px;
+    width: 80px;
+    align-self: center;
     /* transform: translateX(100%); */
     border-radius: 15%;
     object-fit: contain;
