@@ -46,9 +46,7 @@ export default class App extends Component {
         this.setState({ modalOn: true });
     }
 
-    closeModal(e) {
-        
-
+    closeModal() {
         this.setState({ modalOn: false });
     }
 
@@ -82,7 +80,6 @@ export default class App extends Component {
                     appear
                 >
                     <div id="menus" onClose={this.menuList}>
-                        
                         <div>
                             <Link
                                 style={{ textDecoration: "none" }}

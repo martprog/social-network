@@ -19,7 +19,7 @@ export default function Friends() {
             state.friendsAndReqs.filter((friend) => friend.accepted === true)
     );
 
-    // console.log("friends: ", friends);
+    
 
     useEffect(() => {
         (async () => {

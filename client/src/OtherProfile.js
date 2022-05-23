@@ -9,10 +9,11 @@ import {
     TransitionGroup,
 } from "react-transition-group";
 import FriendButton from "./FriendButton";
+// import FriendsOtherProfile from "./FriendsOtherProfile";
 
 export default function OtherProfile() {
     const [otherProfile, setOtherProfile] = useState({});
-    const [transition, setTransition] = useState(true)
+    const [transition, setTransition] = useState(true);
 
     const { otherUserId } = useParams();
 
@@ -39,19 +40,30 @@ export default function OtherProfile() {
                 appear
                 exit
             >
-                <div className="profileContainer">
-                    <div className="profileRectangle"></div>
-                    <div className="about">
-                        <div>
-                            <img src={otherProfile.profile_picture_url || "../default.png"} />
+                <div>
+                    <div className="profileContainer">
+                        <div className="profileRectangle"></div>
+                        <div className="about">
+                            <div>
+                                <img
+                                    src={
+                                        otherProfile.profile_picture_url ||
+                                        "../default.png"
+                                    }
+                                />
+                            </div>
+                            <h2>
+                                {otherProfile.first} {otherProfile.last}
+                            </h2>
+                            <p>ABOUT ME</p>
+                            <p>{otherProfile.bio}</p>
+                            <FriendButton otherUserId={otherUserId} />
                         </div>
-                        <h2>
-                            {otherProfile.first} {otherProfile.last}
-                        </h2>
-                        <p>ABOUT ME</p>
-                        <p>{otherProfile.bio}</p>
-                        <FriendButton  otherUserId = {otherUserId}/>
                     </div>
+
+                    {/* <FriendsOtherProfile
+                        otherUserId={otherUserId}
+                    ></FriendsOtherProfile> */}
                 </div>
             </CSSTransition>
         </>

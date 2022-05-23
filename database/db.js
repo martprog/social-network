@@ -232,7 +232,7 @@ const removeFriendship = (userId, otherUserId) => {
 
 const getFriendsAndReqs = (id) => {
     const query = `
-        SELECT users.id, friendships.sender_id, friendships.recipient_id, friendships.accepted, users.first, users.last, users.profile_picture_url
+        SELECT  users.id,  friendships.id as friendid, friendships.sender_id, friendships.recipient_id, friendships.accepted, users.first, users.last, users.profile_picture_url
         from friendships
         JOIN users
         ON (friendships.sender_id = users.id OR friendships.recipient_id = users.id)
@@ -251,7 +251,7 @@ const getFriendsAndReqs = (id) => {
 
 const getAllMessages = () => {
     const query = `
-        SELECT users.first, users.last, users.profile_picture_url, chat_messages.id, chat_messages.sender_id, chat_messages.text, chat_messages.created_at FROM chat_messages
+        SELECT users.id as userid, users.first, users.last, users.profile_picture_url, chat_messages.id, chat_messages.sender_id, chat_messages.text, chat_messages.created_at FROM chat_messages
         JOIN users
         ON chat_messages.sender_id=users.id
         ORDER BY created_at DESC
@@ -277,6 +277,15 @@ const createNewMsg = (id, text) => {
     });
 };
 
+const getUsersByIds = ids =>{
+
+    return db.query( `SELECT * FROM users WHERE id = ANY($1)`, [ids] ).then((results)=>{
+        
+        return results.rows;
+    });
+}; 
+    
+
 module.exports = {
     createUser,
     login,
@@ -296,4 +305,5 @@ module.exports = {
     getFriendsAndReqs,
     getAllMessages,
     createNewMsg,
+    getUsersByIds
 };

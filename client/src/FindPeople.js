@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-    Transition,
-    CSSTransition,
-    SwitchTransition,
-    TransitionGroup,
-} from "react-transition-group";
+// import {
+//     Transition,
+//     CSSTransition,
+//     SwitchTransition,
+//     TransitionGroup,
+// } from "react-transition-group";
 
 export default function FindPeople() {
     const [search, setSearch] = useState("");
@@ -42,8 +42,8 @@ export default function FindPeople() {
                                 !search
                                     ? "usersFind"
                                     : location.pathname == "/find"
-                                    ? "searchedFind"
-                                    : "searchedAdd"
+                                        ? "searchedFind"
+                                        : "searchedAdd"
                             }
                         >
                             <img
@@ -91,8 +91,8 @@ export default function FindPeople() {
                             !search
                                 ? "allResults"
                                 : location.pathname == "/find"
-                                ? "searched"
-                                : "new"
+                                    ? "searched"
+                                    : "new"
                         }
                     >
                         {users.length >= 1 ? (

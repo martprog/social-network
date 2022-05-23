@@ -1,13 +1,15 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMessages, addMessage } from "./redux/messages/slice";
 import { getUserId } from "./redux/sessionId/slice";
+import { getOnlineUsers } from "./redux/online-users/slice";
 import { Link } from "react-router-dom";
 
 // import { io } from "socket.io-client";
 import { socket } from "./socketInit";
 
 export default function ChatMessages() {
+    const [isOpen, setIsOpen] = useState(false);
     const lastMessageRef = useRef(null);
     const dispatch = useDispatch();
 
@@ -21,22 +23,32 @@ export default function ChatMessages() {
     );
 
     const userId = useSelector((state) => state.userId && state.userId);
+    const onlineUsers = useSelector(
+        (state) => state.onlineUsers && state.onlineUsers
+    );
 
+    // console.log(onlineUsers, chatMessages);
     useEffect(() => {
         (async () => {
             const res = await fetch("/user/id.json");
             const data = await res.json();
             dispatch(getUserId(data.userId));
         })();
+
         socket.on("chatMessages", function (data) {
             dispatch(getMessages(data));
         });
 
+        socket.on("onlineUsers", function (data) {
+            dispatch(getOnlineUsers(data));
+        });
+
         socket.on("newMessage", (data) => {
+            
             dispatch(addMessage(data));
         });
+        
     }, []);
-
 
     useEffect(() => {
         if (lastMessageRef.current) {
@@ -60,6 +72,15 @@ export default function ChatMessages() {
                 ref={lastMessageRef}
             >
                 <img src={message.profile_picture_url} />
+                {onlineUsers.find(
+                    (element) =>
+                        element.id === message.userid ||
+                        message.isOnline === true
+                ) ? (
+                    <span className="dot"></span>
+                ) : (
+                    <span className="red-dot"></span>
+                )}
                 <div className="msg-details">
                     <Link
                         style={{ textDecoration: "none" }}
@@ -98,26 +119,66 @@ export default function ChatMessages() {
         );
     });
 
+    const displayOnline = onlineUsers.map((user) => {
+        return (
+            <div className="online-wrapper" key={user.id}>
+                <img src={user.profile_picture_url} />
+                <p>
+                    {user.first} {user.last}{" "}
+                </p>
+            </div>
+        );
+    });
+
+    function handleIsOpen() {
+        if (!isOpen) {
+            setIsOpen(true);
+        } else {
+            setIsOpen(false);
+        }
+    }
+
     return (
         <>
             <h1>Chat Room</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="chat-wrapper">
-                    {chatMessages.length >= 1 ? msgs : <h2>no messages</h2>}
-                </div>
-                <div className="chat-inpBtn">
-                    <input
-                        type="text"
-                        name="text"
-                        required
-                        autoComplete="off"
-                        placeholder="write something"
-                    />
-                    <div className="textareaBtns">
-                        <button className="btns">Done!</button>
+            <div className="chatroom-wrapper">
+                <form onSubmit={handleSubmit}>
+                    <div className="chat-wrapper">
+                        {chatMessages.length >= 1 ? msgs : <h2>no messages</h2>}
                     </div>
+                    <div className="chat-inpBtn">
+                        <input
+                            type="text"
+                            name="text"
+                            required
+                            autoComplete="off"
+                            placeholder="write something"
+                        />
+                        <div className="textareaBtns">
+                            <button className="btns">Done!</button>
+                        </div>
+                    </div>
+                </form>
+                <div onClick={handleIsOpen} className="online-multiwrapper">
+                    <h3>
+                        <font color="green" size="6">
+                            {onlineUsers.length}
+                        </font>{" "}
+                        Online users
+                    </h3>
+                    {isOpen ? (
+                        <div className="users-online">
+                            {onlineUsers.length >= 1 ? (
+                                displayOnline
+                            ) : (
+                                <h3>No one's around!</h3>
+                            )}
+                        </div>
+                    ) : (
+                        ""
+                    )}
                 </div>
-            </form>
+            </div>
         </>
     );
 }

@@ -45,7 +45,7 @@ export default function FriendButton({ otherUserId }) {
                 },
             })
                 .then((res) => res.json())
-                .then((data) => {
+                .then(() => {
                     setBtnText("Remove Friendship");
                     return;
                 });
@@ -58,7 +58,7 @@ export default function FriendButton({ otherUserId }) {
                 },
             })
                 .then((res) => res.json())
-                .then((data) => {
+                .then(() => {
                     setBtnText("Send Request");
                     return;
                 });

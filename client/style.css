@@ -424,6 +424,7 @@ textarea{
 }
 
 .msg-container{
+    position: relative;
     display: flex;
     border:2px solid #72767d;
     background-color: #36393f;
@@ -745,6 +746,69 @@ animation: shake 400ms cubic-bezier(.36,.07,.19,.97) both;
     background-color: #72767d;
 }
 
+.chatroom-wrapper{
+    display: flex;
+    position: relative;
+}
+
+.users-online{
+    max-height: 200px;
+    border: 1px;
+    background-color: #d6d7da;
+    align-self: baseline;
+    overflow: scroll; 
+}
+
+.online-wrapper{
+    display: flex;
+    padding: 12px;
+    gap: 5px;
+}
+
+.dot {
+position: absolute;
+  left: 55px;
+  top: 55px;
+  border: 3px solid #36393f;
+  height: 25px;
+  width: 25px;
+  background-color: green;
+  border-radius: 50%;
+}
+
+.red-dot {
+position: absolute;
+  left: 55px;
+  top: 55px;
+  border: 3px solid #36393f;
+  height: 25px;
+  width: 25px;
+  background-color: #72767d;
+  border-radius: 50%;
+}
+
+.online-wrapper img{
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+
+}
+
+.online-multiwrapper{
+    width: 250px;
+    background-color: #72767d;
+    /* border-radius: 12%; */
+    position: absolute;
+    right: 0;
+    bottom: 45px;
+    cursor: pointer;
+}
+
+.online-multiwrapper h3{
+    margin: 2px;
+    text-align: end;
+    padding-right: 12px;
+}
 
 
 .login-transition-enter, .login-transition-appear {
