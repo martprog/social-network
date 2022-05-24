@@ -111,7 +111,7 @@ io.on("connection", async function (socket) {
     let getArr = [...new Set(newArr)];
 
     const getOnlineUsers = await getUsersByIds(getArr);
-    socket.emit("onlineUsers", getOnlineUsers);
+    io.emit("onlineUsers", getOnlineUsers);
 
     const chatMessages = await getAllMessages();
 
@@ -129,7 +129,14 @@ io.on("connection", async function (socket) {
         });
     });
 
-    socket.on("disconnect", function () {
+    socket.on("disconnect", async function () {
+        delete onlineUsers[socket.id];
+        newArr = Object.values(onlineUsers);
+        getArr = [...new Set(newArr)];
+
+        const getOnlineUsers = await getUsersByIds(getArr);
+        // console.log('get online users', getOnlineUsers)
+        io.emit("onlineUsers", getOnlineUsers);
         console.log(`socket with the id ${socket.id} is now disconnected`);
     });
 });

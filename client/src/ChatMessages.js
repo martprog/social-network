@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMessages, addMessage } from "./redux/messages/slice";
+// import { getMessages, addMessage } from "./redux/messages/slice";
 import { getUserId } from "./redux/sessionId/slice";
-import { getOnlineUsers } from "./redux/online-users/slice";
+// import { getOnlineUsers } from "./redux/online-users/slice";
 import { Link } from "react-router-dom";
 
 // import { io } from "socket.io-client";
@@ -27,27 +27,12 @@ export default function ChatMessages() {
         (state) => state.onlineUsers && state.onlineUsers
     );
 
-    // console.log(onlineUsers, chatMessages);
     useEffect(() => {
         (async () => {
             const res = await fetch("/user/id.json");
             const data = await res.json();
             dispatch(getUserId(data.userId));
         })();
-
-        socket.on("chatMessages", function (data) {
-            dispatch(getMessages(data));
-        });
-
-        socket.on("onlineUsers", function (data) {
-            dispatch(getOnlineUsers(data));
-        });
-
-        socket.on("newMessage", (data) => {
-            
-            dispatch(addMessage(data));
-        });
-        
     }, []);
 
     useEffect(() => {
@@ -171,7 +156,7 @@ export default function ChatMessages() {
                             {onlineUsers.length >= 1 ? (
                                 displayOnline
                             ) : (
-                                <h3>No one's around!</h3>
+                                <h3>No one &apos s around!</h3>
                             )}
                         </div>
                     ) : (
