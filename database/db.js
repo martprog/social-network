@@ -277,14 +277,13 @@ const createNewMsg = (id, text) => {
     });
 };
 
-const getUsersByIds = ids =>{
-
-    return db.query( `SELECT * FROM users WHERE id = ANY($1)`, [ids] ).then((results)=>{
-        
-        return results.rows;
-    });
-}; 
-    
+const getUsersByIds = (ids) => {
+    return db
+        .query(`SELECT * FROM users WHERE id = ANY($1)`, [ids])
+        .then((results) => {
+            return results.rows;
+        });
+};
 
 module.exports = {
     createUser,
@@ -305,5 +304,5 @@ module.exports = {
     getFriendsAndReqs,
     getAllMessages,
     createNewMsg,
-    getUsersByIds
+    getUsersByIds,
 };

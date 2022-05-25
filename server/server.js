@@ -135,7 +135,7 @@ io.on("connection", async function (socket) {
         getArr = [...new Set(newArr)];
 
         const getOnlineUsers = await getUsersByIds(getArr);
-        // console.log('get online users', getOnlineUsers)
+
         io.emit("onlineUsers", getOnlineUsers);
         console.log(`socket with the id ${socket.id} is now disconnected`);
     });

@@ -521,6 +521,7 @@ input{
     padding: 12px;
     background-color: #202225;
     border-radius: 5px;
+    z-index: 10;
 }
 
 input:focus{
