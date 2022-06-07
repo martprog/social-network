@@ -22,19 +22,5 @@ This is a social network for people who love peanut butter so much that they wan
 <span><img src="https://img.shields.io/badge/PostgreSQL-9cf?style=flat-square&logo=postgresql"></span>
 <span><img src="https://img.shields.io/badge/S3-important?style=flat-square&logo=amazons3&logoColor=white"></span>
 
-## Development
 
-To fork and work with this project follow these steps:
- 
-**Clone the repository:**
-<br>git clone https://github.com/martprog/social-network.git
-
-**Go inside the directory:**
-<br>cd social-network
-
-**Install dependencies:**
-<br>npm install
-
-**Start development server:**
-<br>npm start
 
